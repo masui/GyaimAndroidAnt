@@ -1,7 +1,7 @@
 VERSIONCODE=1
 VERSION=0.0.1
 
-all:
+all: local.properties
 	sed -e "s/VERSIONCODE/${VERSIONCODE}/" AndroidManifest.template | sed -e "s/VERSION/${VERSION}/" > AndroidManifest.xml
 	ant debug
 install:
@@ -26,6 +26,9 @@ publish: clean
 	zipalign -v 4 bin/Gyaim.apk bin/Gyaim-aligned.apk
 	scp bin/Gyaim.apk pitecan.com:/www/www.pitecan.com/GyaimAndroid
 	scp bin/Gyaim.apk pitecan.com:/www/www.pitecan.com/GyaimAndroid/Gyaim-${VERSION}.apk
+
+local.properties:
+	android update project -p ./
 
 # Gyazz.com/SlimeDictから辞書を作成!
 #
