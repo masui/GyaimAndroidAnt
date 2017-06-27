@@ -1,6 +1,7 @@
 //
-//	Gyaimfor Android
+//	Gyaim for Android
 //
+//	Slimeを改造し、キーボード専用にする 2017/06/27 12:17:19 (masui)
 //
 
 package com.pitecan.gyaim;
@@ -95,8 +96,10 @@ public class Gyaim extends InputMethodService
     }
 
     @Override public View onCreateCandidatesView() {
-	Log.v("Gyaim-----------","onCreateCandidatesView");
-	return super.onCreateCandidatesView();
+        //candView = (CandView) getLayoutInflater().inflate(R.layout.input, null);
+    	//Log.v("Gyaim-----------","onCreateCandidatesView candview = "+candView);
+    	//return candView;
+    	return null;
     }
 	
     /*

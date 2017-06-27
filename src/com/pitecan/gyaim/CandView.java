@@ -40,6 +40,7 @@ public class CandView extends View {
 
     public CandView(Context context, AttributeSet attrs) {
 	super(context,attrs);
+	Log.v("Gyaim-----------","candView called");
 
 	// 候補「ボタン」の初期化
 	candButtons = new CandButton[Gyaim.MAXCANDS];
