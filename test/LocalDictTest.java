@@ -1,3 +1,6 @@
+//
+// ローカル辞書検索のテスト
+//
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -9,6 +12,7 @@ import com.pitecan.gyaim.LocalDict;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.IOException;
 
 public class LocalDictTest {
@@ -21,7 +25,7 @@ public class LocalDictTest {
 	try {
 	    FileInputStream is = new FileInputStream(file);
 	    System.out.println("is = " + is);
-	    //dict = new LocalDict(is);
+	    dict = new LocalDict(is);
 	} catch (IOException e) {
 	    System.out.println("FileInputStream trouble");
 	    e.printStackTrace();  

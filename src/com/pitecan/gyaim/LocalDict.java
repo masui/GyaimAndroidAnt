@@ -41,12 +41,12 @@ public class LocalDict {
 	    in = new InputStreamReader(is);
 	    br = new BufferedReader(in);
             while ((line = br.readLine()) != null) {
-		// System.out.println(line);
+		//System.out.println(line);
 		int c = line.charAt(0);
 		if(c == '#' || c == ' ' || c == '\t') continue; // コメント行
 		String[] a = line.split("\t",4);
 		if(a[3] == null || a[3] == "" || a[3].length() == 0 || ("" + a[3] == "")) a[3] = "0";
-		// System.out.println(a[0]);
+		//System.out.println(a[0]);
 		dict.add(new DictEntry(a[0],a[1],Integer.valueOf(a[2]),Integer.valueOf(a[3])));
             }
             br.close();
