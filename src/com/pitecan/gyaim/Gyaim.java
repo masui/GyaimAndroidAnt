@@ -95,12 +95,13 @@ public class Gyaim extends InputMethodService
 	// return null;
     }
 
-    @Override public View onCreateCandidatesView() {
-        //candView = (CandView) getLayoutInflater().inflate(R.layout.input, null);
-    	//Log.v("Gyaim-----------","onCreateCandidatesView candview = "+candView);
-    	//return candView;
-    	return null;
-    }
+    // CandidatesViewを使うといいかと思ったが全部自力の方がよさげなのでやめる
+    //@Override public View onCreateCandidatesView() {
+    //    //candView = (CandView) getLayoutInflater().inflate(R.layout.input, null);
+    //	//Log.v("Gyaim-----------","onCreateCandidatesView candview = "+candView);
+    //	//return candView;
+    //	return null;
+    //}
 	
     /*
     @Override public void onStartInputView(EditorInfo info, boolean restarting) {
