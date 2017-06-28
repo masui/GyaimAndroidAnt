@@ -1,6 +1,16 @@
 compile:
 	cp Message.java ../src/com/pitecan/gyaim
-	javac -classpath 'jar/junit-4.12.jar:jar/hamcrest-all-1.3.jar' ../src/com/pitecan/gyaim/LocalDict.java ../src/com/pitecan/gyaim/Message.java LocalDictTest.java
+	cp SearchTask.java ../src/com/pitecan/gyaim
+	cp Search.java ../src/com/pitecan/gyaim
+	cp Gyaim.java ../src/com/pitecan/gyaim
+	javac -classpath 'jar/junit-4.12.jar:jar/hamcrest-all-1.3.jar' \
+		../src/com/pitecan/gyaim/LocalDict.java \
+		../src/com/pitecan/gyaim/Message.java \
+		../src/com/pitecan/gyaim/Search.java \
+		../src/com/pitecan/gyaim/SearchTask.java \
+		../src/com/pitecan/gyaim/Gyaim.java \
+		LocalDictTest.java
+
 #	javac -classpath '.:jar/junit-4.12.jar:jar/hamcrest-all-1.3.jar' Message.java ../src/com/pitecan/gyaim/LocalDict.java LocalDictTest.java
 
 test:

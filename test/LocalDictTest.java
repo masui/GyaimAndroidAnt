@@ -1,9 +1,10 @@
 //
 // ローカル辞書検索のテスト
 //
-// JUnit 4.12を利用
-//
-// @Test というアノテーションをつけるとテスト関数と解釈される
+// * JUnit 4.12を利用
+//   - @Test というアノテーションをつけるとテスト関数と解釈される
+//   - assertThat() みたいなのが使える
+// * 日本語でわかりやすくしてみたり
 //
 
 // package com.pitecan.gyaim;
@@ -15,6 +16,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 import com.pitecan.gyaim.LocalDict;
+import com.pitecan.gyaim.SearchTask;
+import com.pitecan.gyaim.Search;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -51,5 +54,17 @@ public class LocalDictTest {
 	}
 	assertThat(漢字が登録されてる,is(true));
 	assertThat(増井が登録されてる,is(true));
+    }
+
+    @Test
+    public void 検索テスト(){
+	localDict.search("kaNgae",new SearchTask());
+	assertTrue(Search.words.size() > 0);
+	boolean 考えるが検索された = false;
+	for(String word: Search.words) {
+	    if(word.equals("考える")) 考えるが検索された = true;
+	}
+	assertThat(考えるが検索された,is(true));
+	assertTrue(考えるが検索された);
     }
 }
