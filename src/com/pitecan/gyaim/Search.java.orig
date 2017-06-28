@@ -44,7 +44,7 @@ public class Search {
     // いろんな辞書を使った検索!
     //
     public static Candidate[] search(String pat, String word, boolean useGoogle, SearchTask searchTask){
-	// Log.v("Gyaim","Search - pat="+pat+", word="+word);
+	Log.v("Gyaim","Search - pat="+pat+", word="+word);
 	ncands = 0;
 	// KeyController.candPage = 1;
 

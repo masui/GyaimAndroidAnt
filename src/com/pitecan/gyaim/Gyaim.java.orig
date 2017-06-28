@@ -43,7 +43,7 @@ public class Gyaim extends InputMethodService
     private CandView candView;
     
     ////private KeyView keyView;
-    ////private KeyController keyController;
+    private KeyController keyController;
     ////private LocalDict dict;
     ////private SQLDict sqlDict;
     ////private Search search;
@@ -69,6 +69,8 @@ public class Gyaim extends InputMethodService
      */
     @Override public void onInitializeInterface() {
 	super.onInitializeInterface(); // 必要??
+	keyController = new KeyController();
+	keyController.gyaim = this;
     }
     
     /**
@@ -113,15 +115,33 @@ public class Gyaim extends InputMethodService
     }
     */
 
-    /*
     public void input(String s){
-    }
-
-    public void keyDownUp(int keyEventCode) { // キー入力
+	InputConnection ic = getCurrentInputConnection();
+	if(ic != null) ic.commitText(s,1); // 入力貼り付け
     }
 
     public void showComposingText(){
+	String composingText = "";
+	for(int i=0;i<keyController.inputPatArray.size();i++){
+	    composingText += keyController.inputPatArray.get(i);
+	}
+	InputConnection ic = getCurrentInputConnection();
+	if(ic != null){
+	    ic.setComposingText(composingText,1);
+	}
+	/*
+	String composingText = "abc";
+	InputConnection ic = getCurrentInputConnection();
+	if(ic != null){
+	    ic.setComposingText(composingText,1);
+	}
+	*/
     }
+    
+    /*
+    public void keyDownUp(int keyEventCode) { // キー入力
+    }
+
 
     public void hide(){
     }
@@ -149,8 +169,7 @@ public class Gyaim extends InputMethodService
 	    return false;
 	}
 	else {
-	    InputConnection ic = getCurrentInputConnection();
-	    if(ic != null) ic.commitText("漢字",1); // 入力貼り付け
+	    keyController.onKeyDown(keyCode, event);
 	    //// return super.onKeyDown(keyCode,event);
 	}
 	return true;
