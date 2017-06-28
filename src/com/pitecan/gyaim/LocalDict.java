@@ -48,18 +48,17 @@ public class LocalDict {
 	    in = new InputStreamReader(is);
 	    br = new BufferedReader(in);
             while ((line = br.readLine()) != null) {
-		//System.out.println(line);
-		Message.message("Gyaim",line);
+		// Message.message("Gyaim",line);
 		int c = line.charAt(0);
 		if(c == '#' || c == ' ' || c == '\t') continue; // コメント行
 		String[] a = line.split("\t",4);
 		if(a[3] == null || a[3] == "" || a[3].length() == 0 || ("" + a[3] == "")) a[3] = "0";
-		//System.out.println(a[1]);
+		// Message.message("Gyaim",a[1]);
 		dict.add(new DictEntry(a[0],a[1],Integer.valueOf(a[2]),Integer.valueOf(a[3])));
             }
             br.close();
 	    in.close();
-	    //System.out.println(dict.size());
+	    Message.message("Gyaim","" + dict.size());
 	    
 	} catch (IOException e) {  
 	    e.printStackTrace();  
