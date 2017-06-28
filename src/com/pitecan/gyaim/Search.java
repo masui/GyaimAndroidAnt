@@ -1,3 +1,7 @@
+//
+// LocalDict.javaのテスト用ダミー
+//
+
 package com.pitecan.gyaim;
 
 import java.util.ArrayList;
