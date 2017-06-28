@@ -58,7 +58,7 @@ public class LocalDict {
             }
             br.close();
 	    in.close();
-	    Message.message("Gyaim","" + dict.size());
+	    // Message.message("Gyaim","" + dict.size());
 	    
 	} catch (IOException e) {  
 	    e.printStackTrace();  

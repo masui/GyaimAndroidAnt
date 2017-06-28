@@ -2,12 +2,8 @@
 // ローカル辞書検索のテスト
 //
 // JUnit 4.12を利用
-// compile:
-//    javac -classpath 'jar/junit-4.12.jar:jar/hamcrest-all-1.3.jar' ../src/com/pitecan/gyaim/LocalDict.java LocalDictTest.java
-// test:
-//    java -classpath "jar/junit-4.12.jar:jar/hamcrest-all-1.3.jar:.:../src" org.junit.runner.JUnitCore LocalDictTest
 //
-// @Test というアノテーションをつけるとテスト関数と解釈されるらしい
+// @Test というアノテーションをつけるとテスト関数と解釈される
 //
 
 // package com.pitecan.gyaim;
@@ -53,6 +49,7 @@ public class LocalDictTest {
 	    if(entry.word().equals("漢字")) 漢字が登録されてる = true;
 	    if(entry.word().equals("増井")) 増井が登録されてる = true;
 	}
-	assertTrue(漢字が登録されてる && 増井が登録されてる);
+	assertThat(漢字が登録されてる,is(true));
+	assertThat(増井が登録されてる,is(true));
     }
 }
