@@ -1,4 +1,7 @@
 //
+// ローカル辞書ファイルを使った変換
+//
+// このファイルにはAndroid依存のものを入れないようにしたいのだが
 //
 package com.pitecan.gyaim;
 
@@ -46,6 +49,7 @@ public class LocalDict {
 	    br = new BufferedReader(in);
             while ((line = br.readLine()) != null) {
 		//System.out.println(line);
+		Message.message("Gyaim",line);
 		int c = line.charAt(0);
 		if(c == '#' || c == ' ' || c == '\t') continue; // コメント行
 		String[] a = line.split("\t",4);

@@ -10,6 +10,8 @@
 // @Test というアノテーションをつけるとテスト関数と解釈されるらしい
 //
 
+package com.pitecan.gyaim;
+
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -23,12 +25,18 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.IOException;
 
+class Message {
+    public static void message(String s1, String s2){
+	System.out.println("Message");
+    }
+}
+
 public class LocalDictTest {
-    static final String DICTFILE = "../assets/dict.txt";
+    static final String 単語辞書ファイル = "../assets/dict.txt";
     static LocalDict localDict;
 
     public LocalDictTest(){
-	File file = new File(DICTFILE);
+	File file = new File(単語辞書ファイル);
 	try {
 	    FileInputStream is = new FileInputStream(file);
 	    localDict = new LocalDict(is);
@@ -39,7 +47,7 @@ public class LocalDictTest {
     }
 
     @Test
-    public void 辞書のサイズが充分大きい(){
+    public void 単語辞書のサイズが充分大きい(){
 	assertTrue(localDict.dict().size() > 10000);
     }
 
