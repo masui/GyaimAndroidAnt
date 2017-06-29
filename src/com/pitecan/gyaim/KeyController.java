@@ -1,5 +1,5 @@
 //
-//	キー操作に対するアクションメインルーチン
+//  Gyaimのキー操作に対するアクションメインルーチン
 //
 package com.pitecan.gyaim;
 
@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.KeyEvent;
 
 class KeyController {
-    // Gyaim.onInitializeInterface で呼ばれる
 
     public Gyaim gyaim;
     public CandView candView;
@@ -22,7 +21,6 @@ class KeyController {
     private boolean japaneseInputMode = true;
     
     public KeyController(Gyaim gyaim, CandView candView){
-	Message.message("Gyaim", "xxxx");
 	this.gyaim = gyaim;
 	this.candView = candView;
 	resetInput();
@@ -37,6 +35,9 @@ class KeyController {
     
     private void searchAndDispCand(){
 	Message.message("Gyaim","searchAndDispCand()");
+	//
+	// バックグラウンドで検索を実行させる
+	//
 	searchTask = new SearchTask(candView,useGoogle);
 	searchTask.execute(inputPat());
     }
@@ -55,11 +56,13 @@ class KeyController {
 	    candView.setVisibility(japaneseInputMode ? View.VISIBLE : View.GONE);
 	}
 	if(! japaneseInputMode){
-	    // 日本語モードでないときはfalseを返してデフォルト動作
+	    // 日本語モードでないときはfalseを返して素通し動作させる
 	    // 何がデフォルト動作なのかよくわからないのだけど
 	    return false;
 	}
-
+	//
+	// これ以降は日本語入力モード
+	//
 	if(keyCode >= KeyEvent.KEYCODE_A && keyCode <= KeyEvent.KEYCODE_Z){
 	    int code = 0x61 + (keyCode - KeyEvent.KEYCODE_A);
 	    char[] charArray = Character.toChars(code);

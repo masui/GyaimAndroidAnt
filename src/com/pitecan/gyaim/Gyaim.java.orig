@@ -146,11 +146,6 @@ public class Gyaim extends InputMethodService
 	*/
     }
     
-    /*
-    public void keyDownUp(int keyEventCode) { // キー入力
-    }
-    */
-    
     //public void hide(){
     //	// requestHideSelf(0); // IMEのViewを隠す
     //	candView.setVisibility(View.GONE);
