@@ -50,44 +50,35 @@ class KeyController {
     }
     
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-	if(keyCode == KeyEvent.KEYCODE_SHIFT_RIGHT){
-	    if(japaneseInputMode){
-		candView.setVisibility(View.GONE);
-		japaneseInputMode = false;
+	if(keyCode == KeyEvent.KEYCODE_SHIFT_RIGHT){ // 右シフトキーで日本語モード/素通しモードを切り替えるようにしてみる
+	    japaneseInputMode = !japaneseInputMode;;
+	    candView.setVisibility(japaneseInputMode ? View.VISIBLE : View.GONE);
+	}
+	if(! japaneseInputMode) return false; // 日本語モードでないときはデフォルト動作
+
+	if(keyCode >= KeyEvent.KEYCODE_A && keyCode <= KeyEvent.KEYCODE_Z){
+	    int code = 0x61 + (keyCode - KeyEvent.KEYCODE_A);
+	    char[] charArray = Character.toChars(code);
+	    String s = new String(charArray);
+	    //Message.message("Gyaim","s = " + s);
+	    
+	    inputPatArray.add(s);
+	    gyaim.showComposingText();
+	    
+	    searchAndDispCand();
+	}
+	if(keyCode == KeyEvent.KEYCODE_DEL){
+	    int size = inputPatArray.size();
+	    if(size > 0){
+		inputPatArray.remove(size-1);
+		gyaim.showComposingText();
+		searchAndDispCand();
+		return true;
 	    }
 	    else {
-		japaneseInputMode = true;
-		candView.setVisibility(View.VISIBLE);
+		return false; // 変換中でないときはデフォルト動作
 	    }
 	}
-	if(japaneseInputMode){
-	    if(keyCode >= KeyEvent.KEYCODE_A && keyCode <= KeyEvent.KEYCODE_Z){
-		int code = 0x61 + (keyCode - KeyEvent.KEYCODE_A);
-		char[] charArray = Character.toChars(code);
-		String s = new String(charArray);
-		//Message.message("Gyaim","s = " + s);
-		
-		inputPatArray.add(s);
-		gyaim.showComposingText();
-		
-		searchAndDispCand();
-	    }
-	    if(keyCode == KeyEvent.KEYCODE_DEL){
-		int size = inputPatArray.size();
-		if(size > 0){
-		    inputPatArray.remove(size-1);
-		    gyaim.showComposingText();
-		    searchAndDispCand();
-		    return true;
-		}
-		else {
-		    return false;
-		}
-	    }
-	    return true;
-	}
-	else {
-	    return false;
-	}
+	return true;
     }
 }
