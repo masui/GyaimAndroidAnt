@@ -151,9 +151,10 @@ public class Gyaim extends InputMethodService
     }
     */
     
-    public void hide(){
-	requestHideSelf(0); // IMEのViewを隠す
-    }
+    //public void hide(){
+    //	// requestHideSelf(0); // IMEのViewを隠す
+    //	candView.setVisibility(View.GONE);
+    //}
 
     //
     // 新規登録用にクリップボードの単語を返す
@@ -177,10 +178,10 @@ public class Gyaim extends InputMethodService
 	    return false;
 	}
 	else {
-	    keyController.onKeyDown(keyCode, event);
+	    return keyController.onKeyDown(keyCode, event);
 	    //// return super.onKeyDown(keyCode,event);
 	}
-	return true;
+	// return true;
     }
 
     @Override

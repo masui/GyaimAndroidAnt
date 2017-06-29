@@ -52,37 +52,42 @@ class KeyController {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 	if(keyCode == KeyEvent.KEYCODE_SHIFT_RIGHT){
 	    if(japaneseInputMode){
-		gyaim.hide();
+		candView.setVisibility(View.GONE);
 		japaneseInputMode = false;
 	    }
 	    else {
 		japaneseInputMode = true;
-		candView.invalidate();
+		candView.setVisibility(View.VISIBLE);
 	    }
 	}
-	if(keyCode >= KeyEvent.KEYCODE_A && keyCode <= KeyEvent.KEYCODE_Z){
-	    int code = 0x61 + (keyCode - KeyEvent.KEYCODE_A);
-	    char[] charArray = Character.toChars(code);
-	    String s = new String(charArray);
-	    //Message.message("Gyaim","s = " + s);
-
-	    inputPatArray.add(s);
-	    gyaim.showComposingText();
-
-	    searchAndDispCand();
-	}
-	if(keyCode == KeyEvent.KEYCODE_DEL){
-	    int size = inputPatArray.size();
-	    if(size > 0){
-		inputPatArray.remove(size-1);
+	if(japaneseInputMode){
+	    if(keyCode >= KeyEvent.KEYCODE_A && keyCode <= KeyEvent.KEYCODE_Z){
+		int code = 0x61 + (keyCode - KeyEvent.KEYCODE_A);
+		char[] charArray = Character.toChars(code);
+		String s = new String(charArray);
+		//Message.message("Gyaim","s = " + s);
+		
+		inputPatArray.add(s);
 		gyaim.showComposingText();
+		
 		searchAndDispCand();
-		return true;
 	    }
-	    else {
-		return false;
+	    if(keyCode == KeyEvent.KEYCODE_DEL){
+		int size = inputPatArray.size();
+		if(size > 0){
+		    inputPatArray.remove(size-1);
+		    gyaim.showComposingText();
+		    searchAndDispCand();
+		    return true;
+		}
+		else {
+		    return false;
+		}
 	    }
+	    return true;
 	}
-	return true;
+	else {
+	    return false;
+	}
     }
 }
