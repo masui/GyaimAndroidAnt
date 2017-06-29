@@ -12,6 +12,7 @@ public class SearchTask extends AsyncTask<String, Integer, Candidate[]> {
     public SearchTask(CandView candView, boolean useGoogle){
 	this.candView = candView;
 	this.useGoogle = useGoogle;
+	Message.message("Gyaim","SearchTask: candView = " + candView);
     }
 
     public void progress(int i){
@@ -26,7 +27,7 @@ public class SearchTask extends AsyncTask<String, Integer, Candidate[]> {
 	String pat = searchParams[0];
 	//String word = searchParams[1];
 	if(pat != ""){
-	    res = Search.search(pat,/* word,*/ useGoogle,this); // this.cancel()が呼ばれるとthis.isCancelled()がtrueになる
+	    res = Search.search(pat,useGoogle,this); // this.cancel()が呼ばれるとthis.isCancelled()がtrueになる
 	    if(isCancelled()){
 	    }
 	}
@@ -49,8 +50,8 @@ public class SearchTask extends AsyncTask<String, Integer, Candidate[]> {
     }
 
     private void updateView(){
-	/*****
 	int nbuttons = 0;
+	Message.message("Gyaim","Search.ncands = " + Search.ncands);
 	if(Search.ncands > 0){
 	    for(;nbuttons<CandView.candButtons.length && nbuttons <Search.ncands;nbuttons++){
 		CandView.candButtons[nbuttons].text = Search.candidates[nbuttons].word;
@@ -61,8 +62,7 @@ public class SearchTask extends AsyncTask<String, Integer, Candidate[]> {
 	    CandView.candButtons[i].text = "";
 	    CandView.candButtons[i].pat = "";
 	}
-	////candView.drawDefault();
-	*/
+	candView.drawDefault();
     }
 
     @Override

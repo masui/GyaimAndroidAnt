@@ -22,8 +22,6 @@ class Candidate {
     }
 }
 
-
-
 public class Search {
     LocalDict localDict;
     static SQLDict sqlDict;
@@ -58,7 +56,7 @@ public class Search {
     // いろんな辞書を使った検索!
     //
     public static Candidate[] search(String pat, /* String word, */ boolean useGoogle, SearchTask searchTask){
-	Log.v("Gyaim","Search - pat="+pat);
+	Message.message("Gyaim","Search - pat="+pat);
 	ncands = 0;
 	// KeyController.candPage = 1;
 

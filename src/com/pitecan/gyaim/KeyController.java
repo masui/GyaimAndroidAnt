@@ -13,19 +13,16 @@ class KeyController {
     
     public Gyaim gyaim;
     public CandView candView;
-    public LocalDict dict;
-    public SQLDict sqlDict;
-    // public Search search;
     public boolean useGoogle = false;
 
     public ArrayList<String> inputPatArray;
 
     private SearchTask searchTask = null;
     
-    public KeyController(Gyaim _gyaim, CandView _candView){
+    public KeyController(Gyaim gyaim, CandView candView){
 	Message.message("Gyaim", "xxxx");
-	gyaim = _gyaim;
-	candView = _candView;
+	this.gyaim = gyaim;
+	this.candView = candView;
 	resetInput();
     }
 
@@ -67,6 +64,7 @@ class KeyController {
 	    if(size > 0){
 		inputPatArray.remove(size-1);
 		gyaim.showComposingText();
+		searchAndDispCand();
 		return true;
 	    }
 	    else {

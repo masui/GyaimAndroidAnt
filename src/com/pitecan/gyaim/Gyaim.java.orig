@@ -74,7 +74,7 @@ public class Gyaim extends InputMethodService
      */
     @Override public void onInitializeInterface() {
 	super.onInitializeInterface(); // 必要??
-	keyController = new KeyController(this,candView);
+	//keyController = new KeyController(this,candView); // ここはアカン!
     }
     
     /**
@@ -97,8 +97,9 @@ public class Gyaim extends InputMethodService
 	super.onCreateInputView(); // 必要??
         candView = (CandView) getLayoutInflater().inflate(R.layout.input, null);
 	Log.v("Gyaim-----------","candView = " + candView);
+
+	keyController = new KeyController(this,candView); // この場所?
 	return candView;
-	// return null;
     }
 
     // CandidatesViewを使うといいかと思ったが全部自力の方がよさげなのでやめる

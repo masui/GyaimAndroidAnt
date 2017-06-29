@@ -38,10 +38,11 @@ class CandButton {
 public class CandView extends View {
     public static CandButton[] candButtons;
 
+    private final int buttonTextSize = 50;
+    private Paint buttonTextPaint;
+
     public CandView(Context context, AttributeSet attrs) {
 	super(context,attrs);
-	Log.v("Gyaim-----------","candView called");
-
 	// 候補「ボタン」の初期化
 	candButtons = new CandButton[Gyaim.MAXCANDS];
 	for(int i=0;i<candButtons.length;i++){
@@ -69,17 +70,23 @@ public class CandView extends View {
 	// 背景色
 	buttonPaint = new Paint();
         buttonPaint.setColor(0xffc0c0c0);
+	*/
 	
 	// 候補ボタンのテキスト色
 	buttonTextPaint = new Paint();
 	buttonTextPaint.setAntiAlias(true);
-        buttonTextPaint.setTextSize(buttonTextSize * expand);
+        buttonTextPaint.setTextSize(buttonTextSize); //  * expand);
         buttonTextPaint.setColor(0xff000000); // 黒
-	*/
+    }
+
+    private int bgcolor;
+    
+    public void drawDefault(){
+	bgcolor = 0xffd0d0ff;
+	invalidate();
     }
 
     /*
-    private int bgcolor;
 
     public void draw2(Key keypat[], Key selectedKey, Key selectedKey2, int candPage){
 	this.keypat = keypat;
@@ -101,15 +108,6 @@ public class CandView extends View {
 	    bgcolor = 0xffd0d0d0;
 	    //!!!!keyController.googleDisplayed = true;
 	}
-	invalidate();
-    }
-
-    public void drawDefault(){
-	this.keypat = keys.keypat0;
-	this.selectedKey = null;
-	this.selectedKey2 = null;
-	this.candPage = 1;
-	bgcolor = 0xfff0f0f0;
 	invalidate();
     }
 
@@ -180,8 +178,17 @@ public class CandView extends View {
     */
 
     @Override public void onDraw(Canvas canvas) {
-	Log.v("Gyaim","onDraw");
+	Log.v("Gyaim","onDraw----------------------------");
 	canvas.drawColor(0xffddddff);
+
+	CandButton button;
+	for(int i=0;i<5;i++){
+	    button = candButtons[i];
+	    //if(! button.visible) continue;
+	    float y = i * 50;
+	    canvas.drawText(button.text,20,y+50,buttonTextPaint);
+	    Message.message("Gyaim","text = " + button.text);
+	}
 	
 	/*
 	Bitmap image;
@@ -257,7 +264,7 @@ public class CandView extends View {
 	int width = MeasureSpec.getSize(widthMeasureSpec);
 	int height = MeasureSpec.getSize(heightMeasureSpec);
 
-        setMeasuredDimension(300,300);
+        setMeasuredDimension(1000,200);
 
 	// self.layout()
 	
@@ -294,7 +301,7 @@ public class CandView extends View {
         setMeasuredDimension((int)(320 * expand),(int)(216 * expand));
 	*/
 
-	////initGraphics();
+	initGraphics();
 
 	//super.onMeasure(widthMeasureSpec, heightMeasureSpec);
    }

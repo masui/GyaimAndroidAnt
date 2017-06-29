@@ -1,11 +1,11 @@
 compile:
-	cp Message.java ../src/com/pitecan/gyaim
+	cp -f Message.java ../src/com/pitecan/gyaim
 	chmod 444 ../src/com/pitecan/gyaim/Message.java
-	cp SearchTask.java ../src/com/pitecan/gyaim
+	cp -f SearchTask.java ../src/com/pitecan/gyaim
 	chmod 444 ../src/com/pitecan/gyaim/SearchTask.java
-	cp Search.java ../src/com/pitecan/gyaim
+	cp -f Search.java ../src/com/pitecan/gyaim
 	chmod 444 ../src/com/pitecan/gyaim/Search.java
-	cp Gyaim.java ../src/com/pitecan/gyaim
+	cp -f Gyaim.java ../src/com/pitecan/gyaim
 	chmod 444 ../src/com/pitecan/gyaim/Gyaim.java
 	javac -classpath 'jar/junit-4.12.jar:jar/hamcrest-all-1.3.jar' \
 		../src/com/pitecan/gyaim/LocalDict.java \
