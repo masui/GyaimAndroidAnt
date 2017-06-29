@@ -37,6 +37,10 @@ import android.content.Context;
 ////import java.util.Date;
 ////import java.text.SimpleDateFormat;
 
+import android.content.res.AssetManager;
+import java.io.InputStream;
+import java.io.IOException;
+
 public class Gyaim extends InputMethodService 
 {
     //private Keys keys;
@@ -44,9 +48,9 @@ public class Gyaim extends InputMethodService
     
     ////private KeyView keyView;
     private KeyController keyController;
-    ////private LocalDict dict;
-    ////private SQLDict sqlDict;
-    ////private Search search;
+    private LocalDict dict;
+    private SQLDict sqlDict;
+    private Search search;
 
     ////private ClipboardManager cm;
     ////private String clipboardText;
@@ -61,6 +65,16 @@ public class Gyaim extends InputMethodService
     public void onCreate()
     {
         super.onCreate();
+	dict = null;
+	try {
+	    AssetManager as = getResources().getAssets();
+	    InputStream is = as.open("dict.txt");
+	    dict = new LocalDict(is);
+	} catch (IOException e) {  
+	    //e.printStackTrace();  
+	}
+	sqlDict = null;
+	search = new Search(dict,sqlDict,this);
     }
 
     /**
@@ -71,6 +85,10 @@ public class Gyaim extends InputMethodService
 	super.onInitializeInterface(); // 必要??
 	keyController = new KeyController();
 	keyController.gyaim = this;
+	keyController.candView = candView;
+	keyController.dict = dict; // 必要?
+	keyController.sqlDict = sqlDict;
+	keyController.search = search;
     }
     
     /**
@@ -121,6 +139,9 @@ public class Gyaim extends InputMethodService
     }
 
     public void showComposingText(){
+	// Androidビルド時に下の表記が使えない。Javacのバージョンが古い?
+	// for(String char: keyController.inputPatArray){ composingText += char; }
+	
 	String composingText = "";
 	for(int i=0;i<keyController.inputPatArray.size();i++){
 	    composingText += keyController.inputPatArray.get(i);

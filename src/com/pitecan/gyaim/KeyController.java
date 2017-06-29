@@ -5,15 +5,23 @@ package com.pitecan.gyaim;
 
 import java.util.ArrayList;
 
+import android.view.View;
 import android.view.KeyEvent;
 
 class KeyController {
     // Gyaim.onInitializeInterface で呼ばれる
     
     public Gyaim gyaim;
+    public CandView candView;
+    public LocalDict dict;
+    public SQLDict sqlDict;
+    public Search search;
+    public boolean useGoogle = false;
 
     public ArrayList<String> inputPatArray;
 
+    private SearchTask searchTask = null;
+    
     public KeyController() {
 	Message.message("Gyaim", "xxxx");
 	resetInput();
@@ -26,8 +34,21 @@ class KeyController {
     void reset(){
     }
     
+    private void searchAndDispCand(){
+	Message.message("Gyaim","searchAndDispCand()");
+	searchTask = new SearchTask(candView,useGoogle);
+	searchTask.execute(inputPat());
+    }
+    
+    public String inputPat(){
+	String pat = "";
+	for(int i=0;i<inputPatArray.size();i++){
+	    pat = pat + inputPatArray.get(i);
+	}
+	return pat;
+    }
+    
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-	// gyaim.input("増井");
 	if(keyCode >= KeyEvent.KEYCODE_A && keyCode <= KeyEvent.KEYCODE_Z){
 	    int code = 0x61 + (keyCode - KeyEvent.KEYCODE_A);
 	    char[] charArray = Character.toChars(code);
@@ -36,6 +57,8 @@ class KeyController {
 
 	    inputPatArray.add(s);
 	    gyaim.showComposingText();
+
+	    searchAndDispCand();
 	}
 	if(keyCode == KeyEvent.KEYCODE_DEL){
 	    int size = inputPatArray.size();
@@ -44,7 +67,6 @@ class KeyController {
 		gyaim.showComposingText();
 	    }
 	}
-	// gyaim.showComposingText();
 	return true;
     }
 }

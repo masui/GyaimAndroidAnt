@@ -19,35 +19,27 @@ public class SearchTask extends AsyncTask<String, Integer, Candidate[]> {
     }
 
     protected Candidate[] doInBackground(String... searchParams){ // Result の型を返す 引数はParamsの型
+	Message.message("Gyaim","doInBackground start......");
+	
 	Candidate[] res;
 	String pat = searchParams[0];
-	String word = searchParams[1];
+	//String word = searchParams[1];
 	if(pat != ""){
-	    res = Search.search(pat,word,useGoogle,this); // this.cancel()が呼ばれるとthis.isCancelled()がtrueになる
+	    res = Search.search(pat,/* word,*/ useGoogle,this); // this.cancel()が呼ばれるとthis.isCancelled()がtrueになる
 	    if(isCancelled()){
 	    }
 	}
 	else {
 	    Search.ncands = 0;
+	    /*
 	    Search.addCandidateWithLevel("が","ga",0);
 	    Search.addCandidateWithLevel("は","ha",0);
 	    Search.addCandidateWithLevel("の","no",0);
 	    Search.addCandidateWithLevel("に","ni",0);
 	    Search.addCandidateWithLevel("を","wo",0);
-	    /*
-	    Search.addCandidateWithLevel("と","to",0);
-	    Search.addCandidateWithLevel("も","mo",0);
-	    Search.addCandidateWithLevel("へ","he",0);
-	    Search.addCandidateWithLevel("で","de",0);
-	    Search.addCandidateWithLevel("ね","ne",0);
-	    Search.addCandidateWithLevel("か","ka",0);
-	    Search.addCandidateWithLevel("で","de",0);
-	    Search.addCandidateWithLevel("だ","da",0);
-	    Search.addCandidateWithLevel("です","desu",0);
-	    Search.addCandidateWithLevel("でした","deshita",0);
-	    */
 	    Search.addCandidateWithLevel("。",".",0);
 	    Search.addCandidateWithLevel("、",",",0);
+	    */
 	    res = Search.candidates;
 	}
 
@@ -56,6 +48,7 @@ public class SearchTask extends AsyncTask<String, Integer, Candidate[]> {
     }
 
     private void updateView(){
+	/*****
 	int nbuttons = 0;
 	if(Search.ncands > 0){
 	    for(;nbuttons<CandView.candButtons.length && nbuttons <Search.ncands;nbuttons++){
@@ -68,6 +61,7 @@ public class SearchTask extends AsyncTask<String, Integer, Candidate[]> {
 	    CandView.candButtons[i].pat = "";
 	}
 	////candView.drawDefault();
+	*/
     }
 
     @Override

@@ -43,8 +43,8 @@ public class Search {
     //
     // いろんな辞書を使った検索!
     //
-    public static Candidate[] search(String pat, String word, boolean useGoogle, SearchTask searchTask){
-	Log.v("Gyaim","Search - pat="+pat+", word="+word);
+    public static Candidate[] search(String pat, /* String word, */ boolean useGoogle, SearchTask searchTask){
+	Log.v("Gyaim","Search - pat="+pat);
 	ncands = 0;
 	// KeyController.candPage = 1;
 
@@ -78,9 +78,10 @@ public class Search {
 	// 時間がかかることがあるのでSearchTaskでバックグラウンド動作させている。
 	// 何かキー入力があれば isCancelled() がtrueになる。
 	//
-	/*
+
 	LocalDict.search(pat,searchTask);
 
+	/*
 	if(!searchTask.isCancelled()){
 	    // Google Suggest または Google日本語入力を利用
 	    if(useGoogle){
@@ -121,7 +122,7 @@ public class Search {
 
     public static void addCandidateWithLevel(String word, String pat, int level){
 	int i;
-	// Log.v("Gyaim","addCandidate: word="+word+" pat="+pat+" ncands="+ncands+" level="+level);
+	Message.message("Gyaim","addCandidate: word="+word+" pat="+pat+" ncands="+ncands+" level="+level);
 	if(ncands >= Gyaim.MAXCANDS) return;
 	for(i=0;i<ncands;i++){
 	    if(candidates[i].word == null) break;
@@ -131,7 +132,7 @@ public class Search {
 	    candidates[ncands].pat = pat;
 	    candidates[ncands].word = word;
 	    candidates[ncands].weight = level;
-	    // Log.v("Gyaim", "Add "+word+" to candidates");
+	    Message.message("Gyaim", "Add "+word+" to candidates");
 	    ncands++;
 	}
     }
