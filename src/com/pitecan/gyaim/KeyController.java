@@ -54,7 +54,11 @@ class KeyController {
 	    japaneseInputMode = !japaneseInputMode;;
 	    candView.setVisibility(japaneseInputMode ? View.VISIBLE : View.GONE);
 	}
-	if(! japaneseInputMode) return false; // 日本語モードでないときはデフォルト動作
+	if(! japaneseInputMode){
+	    // 日本語モードでないときはfalseを返してデフォルト動作
+	    // 何がデフォルト動作なのかよくわからないのだけど
+	    return false;
+	}
 
 	if(keyCode >= KeyEvent.KEYCODE_A && keyCode <= KeyEvent.KEYCODE_Z){
 	    int code = 0x61 + (keyCode - KeyEvent.KEYCODE_A);
