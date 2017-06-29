@@ -53,20 +53,6 @@ public class CandView extends View {
 
     private void initGraphics(){
 	/*
-	// キートップ色
-	keyPaint = new Paint();
-	keyPaint.setAntiAlias(true);
-        keyPaint.setTextSize(largeKeyTextSize * expand);
-        keyPaint.setColor(0xff000000); // argb 黒
-	smallKeyPaint = new Paint();
-	smallKeyPaint.setAntiAlias(true);
-	smallKeyPaint.setTextSize(smallKeyTextSize * expand);
-        smallKeyPaint.setColor(0xff000000); // 黒
-	tinyKeyPaint = new Paint();
-	tinyKeyPaint.setAntiAlias(true);
-	tinyKeyPaint.setTextSize(tinyKeyTextSize * expand);
-        tinyKeyPaint.setColor(0xff000000); // 黒
-
 	// 背景色
 	buttonPaint = new Paint();
         buttonPaint.setColor(0xffc0c0c0);
@@ -182,11 +168,15 @@ public class CandView extends View {
 	canvas.drawColor(0xffddddff);
 
 	CandButton button;
+	float textPos = 20;
+	float textWidth;
+	
 	for(int i=0;i<5;i++){
 	    button = candButtons[i];
-	    //if(! button.visible) continue;
-	    float y = i * 50;
-	    canvas.drawText(button.text,20,y+50,buttonTextPaint);
+	    //if(! button.visible) continue; どうなってるのか
+	    textWidth = buttonTextPaint.measureText(button.text);
+	    canvas.drawText(button.text, textPos, 60, buttonTextPaint);
+	    textPos += (textWidth + 20.0);
 	    Message.message("Gyaim","text = " + button.text);
 	}
 	
@@ -264,7 +254,7 @@ public class CandView extends View {
 	int width = MeasureSpec.getSize(widthMeasureSpec);
 	int height = MeasureSpec.getSize(heightMeasureSpec);
 
-        setMeasuredDimension(1000,200);
+        setMeasuredDimension(1200,80);
 
 	// self.layout()
 	

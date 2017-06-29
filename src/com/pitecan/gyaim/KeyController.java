@@ -10,7 +10,7 @@ import android.view.KeyEvent;
 
 class KeyController {
     // Gyaim.onInitializeInterface で呼ばれる
-    
+
     public Gyaim gyaim;
     public CandView candView;
     public boolean useGoogle = false;
@@ -18,6 +18,8 @@ class KeyController {
     public ArrayList<String> inputPatArray;
 
     private SearchTask searchTask = null;
+
+    private boolean japaneseInputMode = true;
     
     public KeyController(Gyaim gyaim, CandView candView){
 	Message.message("Gyaim", "xxxx");
@@ -48,6 +50,16 @@ class KeyController {
     }
     
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+	if(keyCode == KeyEvent.KEYCODE_SHIFT_RIGHT){
+	    if(japaneseInputMode){
+		gyaim.hide();
+		japaneseInputMode = false;
+	    }
+	    else {
+		japaneseInputMode = true;
+		candView.invalidate();
+	    }
+	}
 	if(keyCode >= KeyEvent.KEYCODE_A && keyCode <= KeyEvent.KEYCODE_Z){
 	    int code = 0x61 + (keyCode - KeyEvent.KEYCODE_A);
 	    char[] charArray = Character.toChars(code);

@@ -149,11 +149,11 @@ public class Gyaim extends InputMethodService
     /*
     public void keyDownUp(int keyEventCode) { // キー入力
     }
-
-
-    public void hide(){
-    }
     */
+    
+    public void hide(){
+	requestHideSelf(0); // IMEのViewを隠す
+    }
 
     //
     // 新規登録用にクリップボードの単語を返す
