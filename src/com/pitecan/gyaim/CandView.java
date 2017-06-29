@@ -181,7 +181,7 @@ public class CandView extends View {
 
     @Override public void onDraw(Canvas canvas) {
 	Log.v("Gyaim","onDraw");
-	canvas.drawColor(0xffffff30);
+	canvas.drawColor(0xffddddff);
 	
 	/*
 	Bitmap image;

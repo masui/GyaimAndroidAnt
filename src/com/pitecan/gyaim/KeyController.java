@@ -15,15 +15,17 @@ class KeyController {
     public CandView candView;
     public LocalDict dict;
     public SQLDict sqlDict;
-    public Search search;
+    // public Search search;
     public boolean useGoogle = false;
 
     public ArrayList<String> inputPatArray;
 
     private SearchTask searchTask = null;
     
-    public KeyController() {
+    public KeyController(Gyaim _gyaim, CandView _candView){
 	Message.message("Gyaim", "xxxx");
+	gyaim = _gyaim;
+	candView = _candView;
 	resetInput();
     }
 
@@ -65,6 +67,10 @@ class KeyController {
 	    if(size > 0){
 		inputPatArray.remove(size-1);
 		gyaim.showComposingText();
+		return true;
+	    }
+	    else {
+		return false;
 	    }
 	}
 	return true;

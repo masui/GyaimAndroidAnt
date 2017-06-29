@@ -18,6 +18,7 @@ public class SearchTask extends AsyncTask<String, Integer, Candidate[]> {
 	publishProgress(0);
     }
 
+    // SearchTask.execute() でこれが呼ばれるのだと思う
     protected Candidate[] doInBackground(String... searchParams){ // Result の型を返す 引数はParamsの型
 	Message.message("Gyaim","doInBackground start......");
 	
@@ -43,7 +44,7 @@ public class SearchTask extends AsyncTask<String, Integer, Candidate[]> {
 	    res = Search.candidates;
 	}
 
-	// Log.v("Gyaim","doInBackground end");
+	Message.message("Gyaim","doInBackground end");
 	return res;
     }
 

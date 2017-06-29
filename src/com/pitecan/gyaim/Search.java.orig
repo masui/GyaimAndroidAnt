@@ -8,6 +8,10 @@ import java.util.Arrays;
 import android.util.Log;
 // import android.os.AsyncTask;
 
+import android.content.res.AssetManager;
+import java.io.InputStream;
+import java.io.IOException;
+
 class Candidate {
     String pat, word;
     int weight;
@@ -18,6 +22,8 @@ class Candidate {
     }
 }
 
+
+
 public class Search {
     LocalDict localDict;
     static SQLDict sqlDict;
@@ -27,9 +33,17 @@ public class Search {
     public static Candidate[] candidates = new Candidate[Gyaim.MAXCANDS];  // 候補単語リスト
     public static int ncands = 0;
 
-    public Search(LocalDict localDict, SQLDict sqlDict, Gyaim gyaim){
-	this.localDict = localDict;
-	this.sqlDict = sqlDict;
+    public Search(/* LocalDict localDict,*/ /* SQLDict sqlDict, */Gyaim gyaim){
+	localDict = null;
+	try {
+	    AssetManager as = gyaim.getResources().getAssets();
+	    InputStream is = as.open("dict.txt");
+	    localDict = new LocalDict(is);
+	} catch (IOException e) {  
+	    //e.printStackTrace();  
+	}
+	//this.localDict = localDict;
+	//this.sqlDict = sqlDict;
 	this.gyaim = gyaim;
 	for(int i=0;i<Gyaim.MAXCANDS;i++){
 	    candidates[i] = new Candidate("","",0);

@@ -37,9 +37,9 @@ import android.content.Context;
 ////import java.util.Date;
 ////import java.text.SimpleDateFormat;
 
-import android.content.res.AssetManager;
-import java.io.InputStream;
-import java.io.IOException;
+//import android.content.res.AssetManager;
+//import java.io.InputStream;
+//import java.io.IOException;
 
 public class Gyaim extends InputMethodService 
 {
@@ -48,8 +48,8 @@ public class Gyaim extends InputMethodService
     
     ////private KeyView keyView;
     private KeyController keyController;
-    private LocalDict dict;
-    private SQLDict sqlDict;
+    //// private LocalDict dict;
+    ////private SQLDict sqlDict;
     private Search search;
 
     ////private ClipboardManager cm;
@@ -65,16 +65,7 @@ public class Gyaim extends InputMethodService
     public void onCreate()
     {
         super.onCreate();
-	dict = null;
-	try {
-	    AssetManager as = getResources().getAssets();
-	    InputStream is = as.open("dict.txt");
-	    dict = new LocalDict(is);
-	} catch (IOException e) {  
-	    //e.printStackTrace();  
-	}
-	sqlDict = null;
-	search = new Search(dict,sqlDict,this);
+	search = new Search(this);
     }
 
     /**
@@ -83,12 +74,7 @@ public class Gyaim extends InputMethodService
      */
     @Override public void onInitializeInterface() {
 	super.onInitializeInterface(); // 必要??
-	keyController = new KeyController();
-	keyController.gyaim = this;
-	keyController.candView = candView;
-	keyController.dict = dict; // 必要?
-	keyController.sqlDict = sqlDict;
-	keyController.search = search;
+	keyController = new KeyController(this,candView);
     }
     
     /**
