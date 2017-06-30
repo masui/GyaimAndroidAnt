@@ -125,25 +125,19 @@ public class Gyaim extends InputMethodService
 	if(ic != null) ic.commitText(s,1); // 入力貼り付け
     }
 
-    public void showComposingText(){
+    public void showComposingText(String text){
 	// Androidビルド時に下の表記が使えない。Javacのバージョンが古い?
 	// for(String char: keyController.inputPatArray){ composingText += char; }
-	
+	/*
 	String composingText = "";
 	for(int i=0;i<keyController.inputPatArray.size();i++){
 	    composingText += keyController.inputPatArray.get(i);
 	}
-	InputConnection ic = getCurrentInputConnection();
-	if(ic != null){
-	    ic.setComposingText(composingText,1);
-	}
-	/*
-	String composingText = "abc";
-	InputConnection ic = getCurrentInputConnection();
-	if(ic != null){
-	    ic.setComposingText(composingText,1);
-	}
 	*/
+	InputConnection ic = getCurrentInputConnection();
+	if(ic != null){
+	    ic.setComposingText(text,1);
+	}
     }
     
     //public void hide(){
@@ -167,6 +161,8 @@ public class Gyaim extends InputMethodService
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 	Log.v("Gyaim","onKeyDown - keyCode = "+keyCode);
+	return keyController.onKeyDown(keyCode, event);
+	/*
 	//if(Build.VERSION.SDK_INT >= 11 && keyCode == KeyEvent.KEYCODE_BACK && isInputViewShown()){
 	if(Build.VERSION.SDK_INT >= 11 && keyCode == KeyEvent.KEYCODE_BACK){ // 画面の←キー
 	    ////keyController.backKey();
@@ -177,6 +173,7 @@ public class Gyaim extends InputMethodService
 	    //// return super.onKeyDown(keyCode,event);
 	}
 	// return true;
+	*/
     }
 
     @Override

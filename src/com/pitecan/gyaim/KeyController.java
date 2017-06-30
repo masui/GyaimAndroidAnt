@@ -7,12 +7,14 @@ import java.util.ArrayList;
 
 import android.view.View;
 import android.view.KeyEvent;
+import android.text.TextUtils;
 
 class KeyController {
 
     public Gyaim gyaim;
     public CandView candView;
     public boolean useGoogle = false;
+    int nthCandSelected = 0;
 
     public ArrayList<String> inputPatArray;
 
@@ -28,6 +30,7 @@ class KeyController {
 
     void resetInput(){
 	inputPatArray = new ArrayList<String>();
+	nthCandSelected = 0;
     }
     
     void reset(){
@@ -44,46 +47,67 @@ class KeyController {
     
     public String inputPat(){
 	String pat = "";
+	/*
 	for(int i=0;i<inputPatArray.size();i++){
 	    pat = pat + inputPatArray.get(i);
 	}
+	*/
+	pat = TextUtils.join("",inputPatArray);
 	return pat;
     }
     
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-	if(keyCode == KeyEvent.KEYCODE_SHIFT_RIGHT){ // 右シフトキーで日本語モード/素通しモードを切り替えるようにしてみる
+	if(keyCode == KeyEvent.KEYCODE_SYM){
+	    // SYMキーのデフォルト動作(?)は変なダイアログが出るので
+	    // モード切り換えに利用してみる
+	    japaneseInputMode = !japaneseInputMode;;
+	    candView.setVisibility(japaneseInputMode ? View.VISIBLE : View.GONE);
+	    return true;
+	}
+	if(keyCode == KeyEvent.KEYCODE_SHIFT_RIGHT){ // 右シフトキーで日本語モード/素通しモード切替
 	    japaneseInputMode = !japaneseInputMode;;
 	    candView.setVisibility(japaneseInputMode ? View.VISIBLE : View.GONE);
 	}
 	if(! japaneseInputMode){
-	    // 日本語モードでないときはfalseを返して素通し動作させる
-	    // 何がデフォルト動作なのかよくわからないのだけど
+	    // 日本語モードでないときはfalseを返して素通しデフォルト動作(?)させる
 	    return false;
 	}
 	//
-	// これ以降は日本語入力モード
+	// これ以降は日本語入力モードの挙動
+	// 状態遷移を特に記述するほどではないという理解で
 	//
 	if(keyCode >= KeyEvent.KEYCODE_A && keyCode <= KeyEvent.KEYCODE_Z){
 	    int code = 0x61 + (keyCode - KeyEvent.KEYCODE_A);
 	    char[] charArray = Character.toChars(code);
 	    String s = new String(charArray);
-	    //Message.message("Gyaim","s = " + s);
 	    
 	    inputPatArray.add(s);
-	    gyaim.showComposingText();
+	    gyaim.showComposingText(inputPat());
 	    
 	    searchAndDispCand();
 	}
+	if(keyCode == KeyEvent.KEYCODE_SPACE){
+	    nthCandSelected += 1;
+	    gyaim.showComposingText(Search.candidates[nthCandSelected-1].word);
+	}
 	if(keyCode == KeyEvent.KEYCODE_DEL){
-	    int size = inputPatArray.size();
-	    if(size > 0){
-		inputPatArray.remove(size-1);
-		gyaim.showComposingText();
-		searchAndDispCand();
-		return true;
+	    if(nthCandSelected > 0){ // 候補選択状態
+		nthCandSelected -= 1;
+	    }
+	    if(nthCandSelected > 0){
+		gyaim.showComposingText(Search.candidates[nthCandSelected-1].word);
 	    }
 	    else {
-		return false; // 変換中でないときはデフォルト動作
+		int size = inputPatArray.size();
+		if(size > 0){
+		    inputPatArray.remove(size-1);
+		    gyaim.showComposingText(inputPat());
+		    searchAndDispCand();
+		    return true;
+		}
+		else {
+		    return false; // 変換中でないときはデフォルト動作
+		}
 	    }
 	}
 	return true;
