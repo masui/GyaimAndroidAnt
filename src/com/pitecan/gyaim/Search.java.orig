@@ -24,7 +24,7 @@ class Candidate {
 
 public class Search {
     LocalDict localDict;
-    static SQLDict sqlDict;
+    static public SQLDict sqlDict;
     static Gyaim gyaim;
     static int nbuttons;
 
@@ -32,6 +32,8 @@ public class Search {
     public static int ncands = 0;
 
     public Search(Gyaim gyaim){
+	this.gyaim = gyaim;
+	
 	localDict = null;
 	try {
 	    AssetManager as = gyaim.getResources().getAssets();
@@ -40,7 +42,9 @@ public class Search {
 	} catch (IOException e) {  
 	    //e.printStackTrace();  
 	}
-	this.gyaim = gyaim;
+
+	sqlDict = new SQLDict(gyaim);
+	
 	for(int i=0;i<Gyaim.MAXCANDS;i++){
 	    candidates[i] = new Candidate("","",0);
 	}
@@ -76,10 +80,10 @@ public class Search {
 	*/
 
 	// 学習辞書を検索
-	////String[][] s = sqlDict.match(pat,LocalDict.exactMode);
-	////for(int k=0;k<s.length;k++){
-	////    addCandidateWithLevel(s[k][0],s[k][1],-50+k);
-	////}
+	String[][] s = sqlDict.match(pat,LocalDict.exactMode);
+	for(int k=0;k<s.length;k++){
+	    addCandidateWithLevel(s[k][0],s[k][1],-50+k);
+	}
 
 	// 通常のローカル辞書を検索
 	// 時間がかかることがあるのでSearchTaskでバックグラウンド動作させている。

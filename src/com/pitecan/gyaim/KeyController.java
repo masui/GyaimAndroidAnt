@@ -55,7 +55,10 @@ class KeyController {
 
     private void fix(){
 	if(nthCandSelected > 0){ // 候補選択状態
-	    gyaim.input(Search.candidates[nthCandSelected-1].word);
+	    String word = Search.candidates[nthCandSelected-1].word;
+	    gyaim.input(word);
+	    Search.sqlDict.add(word,inputPat());
+	    Search.sqlDict.limit(1000); // 1000個以上になれば古いエントリを消す
 	}
 	else {
 	    gyaim.input(inputPat());
