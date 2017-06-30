@@ -50,10 +50,7 @@ public class Gyaim extends InputMethodService
     //private Keys keys;
     private CandView candView;
     
-    ////private KeyView keyView;
     private KeyController keyController;
-    //// private LocalDict dict;
-    ////private SQLDict sqlDict;
     private Search search;
 
     ////private ClipboardManager cm;
@@ -201,6 +198,7 @@ public class Gyaim extends InputMethodService
     public void logWord(String word){
     }
 
+    // https://stackoverflow.com/questions/4930416/android-edittexts-cursor-coordinates-absolute-position
     @Override
     public void onUpdateCursorAnchorInfo(CursorAnchorInfo cursorAnchorInfo){
 	/*
@@ -209,6 +207,6 @@ public class Gyaim extends InputMethodService
 	cursorAnchorInfo.getInsertionMarkerHorizontal() (x)
 	    and cursorAnchorInfo.getInsertionMarkerTop() (y).
 	*/
-	Message.message("Gyaim","Cursor Pos = " + cursorAnchorInfo.getInsertionMarkerTop());
+	Message.message("Gyaim","Cursor Pos = " + cursorAnchorInfo.getInsertionMarkerTop()); // NaNになることあり
     }
 }
