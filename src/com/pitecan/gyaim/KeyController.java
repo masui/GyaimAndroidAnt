@@ -46,14 +46,7 @@ class KeyController {
     }
     
     public String inputPat(){
-	String pat = "";
-	/*
-	for(int i=0;i<inputPatArray.size();i++){
-	    pat = pat + inputPatArray.get(i);
-	}
-	*/
-	pat = TextUtils.join("",inputPatArray);
-	return pat;
+	return TextUtils.join("",inputPatArray);
     }
     
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -90,12 +83,24 @@ class KeyController {
 	    nthCandSelected += 1;
 	    gyaim.showComposingText(Search.candidates[nthCandSelected-1].word);
 	}
+	if(keyCode == KeyEvent.KEYCODE_ENTER){
+	    if(nthCandSelected > 0){ // 候補選択状態
+		gyaim.input(Search.candidates[nthCandSelected-1].word);
+	    }
+	    else {
+		gyaim.input(inputPat());
+	    }
+	    resetInput();
+	}
 	if(keyCode == KeyEvent.KEYCODE_DEL){
 	    if(nthCandSelected > 0){ // 候補選択状態
 		nthCandSelected -= 1;
-	    }
-	    if(nthCandSelected > 0){
-		gyaim.showComposingText(Search.candidates[nthCandSelected-1].word);
+		if(nthCandSelected > 0){
+		    gyaim.showComposingText(Search.candidates[nthCandSelected-1].word);
+		}
+		else {
+		    gyaim.showComposingText(inputPat());
+		}
 	    }
 	    else {
 		int size = inputPatArray.size();
@@ -103,7 +108,6 @@ class KeyController {
 		    inputPatArray.remove(size-1);
 		    gyaim.showComposingText(inputPat());
 		    searchAndDispCand();
-		    return true;
 		}
 		else {
 		    return false; // 変換中でないときはデフォルト動作
