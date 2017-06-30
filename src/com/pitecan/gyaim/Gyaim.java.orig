@@ -24,10 +24,11 @@ import android.util.Log;
 // import android.widget.AbsoluteLayout; // これがあるとコンパイラに文句を言われる
 
 import android.content.Context;
-////import android.text.ClipboardManager;
+
+import android.text.ClipboardManager;
 // Android3.0以上の場合こちら
-// import android.content.ClipData;
-// import android.content.ClipboardManager;
+//import android.content.ClipData;
+//import android.content.ClipboardManager;
 
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -51,8 +52,8 @@ public class Gyaim extends InputMethodService
     private KeyController keyController;
     private Search search;
 
-    ////private ClipboardManager cm;
-    ////private String clipboardText;
+    private ClipboardManager cm;
+    private String clipboardText = "";
 
     static final int MAXCANDS = 50;
 
@@ -65,6 +66,7 @@ public class Gyaim extends InputMethodService
     {
         super.onCreate();
 	search = new Search(this);
+	cm = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
     }
 
     /**
@@ -133,10 +135,19 @@ public class Gyaim extends InputMethodService
     // 新規登録用にクリップボードの単語を返す
     //
     public void clearRegWord(){
+	CharSequence seq = cm.getText();
+	clipboardText = (seq == null ? "" : seq.toString());
     }
 
     public String getRegWord(){
-	return "";
+	CharSequence seq = cm.getText();
+	String s = (seq == null ? "" : seq.toString());
+	if(s.equals(clipboardText)){
+	    return "";
+	}
+	else {
+	    return s;
+	}
     }
 
     //

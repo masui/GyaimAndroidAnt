@@ -66,6 +66,7 @@ class KeyController {
 	resetInput();
 	Search.reset();
 	candView.invalidate();
+	gyaim.clearRegWord();
     }
     
     boolean onKeyDown(int keyCode, KeyEvent event) {
