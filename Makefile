@@ -1,5 +1,3 @@
-.PHONY: test
-
 VERSIONCODE=1
 VERSION=0.0.1
 
@@ -29,10 +27,16 @@ push:
 	git push pitecan.com:/home/masui/git/GyaimAndroid.git
 	git push git@github.com:masui/GyaimAndroid.git
 
+#
+# 辞書と検索のテスト
+#
+.PHONY: test
 test:
 	cd test; make; make test
 
+#
 # 署名してアップロード
+#
 publish: clean
 	sed -e "s/VERSIONCODE/${VERSIONCODE}/" AndroidManifest.template | sed -e "s/VERSION/${VERSION}/" > AndroidManifest.xml
 	ant release

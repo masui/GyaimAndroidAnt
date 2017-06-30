@@ -31,7 +31,7 @@ class KeyController {
 	resetInput();
     }
 
-    void resetInput(){
+    private void resetInput(){
 	inputPatArray = new ArrayList<String>();
 	nthCandSelected = 0;
 	exactMode = false;
@@ -40,7 +40,7 @@ class KeyController {
     private void searchAndDispCand(){
 	Message.message("Gyaim","searchAndDispCand()");
 	//
-	// バックグラウンドで検索を実行させる
+	// バックグラウンドで検索実行
 	//
 	searchTask = new SearchTask(candView,useGoogle);
 	searchTask.execute(inputPat());
