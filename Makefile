@@ -1,7 +1,7 @@
 VERSIONCODE=1
 VERSION=0.0.1
 
-all: local.properties setsrc
+build: local.properties setsrc
 	sed -e "s/VERSIONCODE/${VERSIONCODE}/" AndroidManifest.template | sed -e "s/VERSION/${VERSION}/" > AndroidManifest.xml
 	ant debug
 
@@ -33,6 +33,11 @@ push:
 .PHONY: test
 test:
 	cd test; make; make test
+
+#
+# ゼロからテスト/ビルド
+#
+all: clean test build
 
 #
 # 署名してアップロード
