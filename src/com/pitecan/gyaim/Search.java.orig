@@ -73,9 +73,9 @@ public class Search {
 	    addCandidateWithLevel(katakana,pat,-99);
 	}
 
-	// コピーした単語を候補に出す (新規登録用)
+	// クリップボードの単語を候補に出す (新規登録用)
 	if(!LocalDict.exactMode){
-	    String s = gyaim.getRegWord();
+	    String s = gyaim.getNewClipboardText();
 	    if(s != "" && s.length() < 10){ // コピー文字列が短い場合だけ候補にする
 		addCandidate(s,pat);
 	    }

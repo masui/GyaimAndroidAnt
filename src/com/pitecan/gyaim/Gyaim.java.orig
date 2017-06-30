@@ -26,7 +26,7 @@ import android.util.Log;
 import android.content.Context;
 
 import android.text.ClipboardManager;
-// Android3.0以上の場合こちら
+// Android3.0以上の場合こちらを使うらしい
 //import android.content.ClipData;
 //import android.content.ClipboardManager;
 
@@ -52,8 +52,8 @@ public class Gyaim extends InputMethodService
     private KeyController keyController;
     private Search search;
 
-    private ClipboardManager cm;
-    private String clipboardText = "";
+    private ClipboardManager clipboardManager;
+    private String oldClipboardText = "";
 
     static final int MAXCANDS = 50;
 
@@ -66,16 +66,18 @@ public class Gyaim extends InputMethodService
     {
         super.onCreate();
 	search = new Search(this);
-	cm = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+	clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
     }
 
     /**
      * This is the point where you can do all of your UI initialization.  It
      * is called after creation and any configuration change.
      */
+    /*
     @Override public void onInitializeInterface() {
 	super.onInitializeInterface(); // 必要??
     }
+    */
     
     /**
      * This is the main point where we do our initialization of the input method
@@ -111,20 +113,12 @@ public class Gyaim extends InputMethodService
 	return candView;
     }
 
-    public void input(String s){
+    public void commitText(String s){
 	InputConnection ic = getCurrentInputConnection();
 	if(ic != null) ic.commitText(s,1); // 入力貼り付け
     }
 
     public void showComposingText(String text){
-	// Androidビルド時に下の表記が使えない。Javacのバージョンが古い?
-	// for(String char: keyController.inputPatArray){ composingText += char; }
-	/*
-	String composingText = "";
-	for(int i=0;i<keyController.inputPatArray.size();i++){
-	    composingText += keyController.inputPatArray.get(i);
-	}
-	*/
 	InputConnection ic = getCurrentInputConnection();
 	if(ic != null){
 	    ic.setComposingText(text,1);
@@ -134,19 +128,19 @@ public class Gyaim extends InputMethodService
     //
     // 新規登録用にクリップボードの単語を返す
     //
-    public void clearRegWord(){
-	CharSequence seq = cm.getText();
-	clipboardText = (seq == null ? "" : seq.toString());
+    public void setOldClipboardText(){
+	CharSequence seq = clipboardManager.getText();
+	oldClipboardText = (seq == null ? "" : seq.toString());
     }
 
-    public String getRegWord(){
-	CharSequence seq = cm.getText();
-	String s = (seq == null ? "" : seq.toString());
-	if(s.equals(clipboardText)){
+    public String getNewClipboardText(){
+	CharSequence seq = clipboardManager.getText();
+	String cilpboardText = (seq == null ? "" : seq.toString());
+	if(cilpboardText.equals(oldClipboardText)){
 	    return "";
 	}
 	else {
-	    return s;
+	    return cilpboardText;
 	}
     }
 
@@ -182,7 +176,6 @@ public class Gyaim extends InputMethodService
     //	Message.message("Gyaim","onTouchEvent - ");
     //	return false;
     //}
-	
 
     //
     // ConnectivityManagerというのを使って、ネットが使えるかどうかを判断し、

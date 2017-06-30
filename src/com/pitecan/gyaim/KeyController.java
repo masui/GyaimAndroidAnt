@@ -36,10 +36,7 @@ class KeyController {
 	nthCandSelected = 0;
 	exactMode = false;
     }
-    
-    void reset(){
-    }
-    
+
     private void searchAndDispCand(){
 	Message.message("Gyaim","searchAndDispCand()");
 	//
@@ -56,17 +53,17 @@ class KeyController {
     private void fix(){
 	if(nthCandSelected > 0){ // 候補選択状態
 	    String word = Search.candidates[nthCandSelected-1].word;
-	    gyaim.input(word);
+	    gyaim.commitText(word); // 選択単語を貼り付け
 	    Search.sqlDict.add(word,inputPat());
 	    Search.sqlDict.limit(1000); // 1000個以上になれば古いエントリを消す
 	}
 	else {
-	    gyaim.input(inputPat());
+	    gyaim.commitText(inputPat()); // 入力パタンを貼り付け
 	}
 	resetInput();
 	Search.reset();
 	candView.invalidate();
-	gyaim.clearRegWord();
+	gyaim.setOldClipboardText();
     }
     
     boolean onKeyDown(int keyCode, KeyEvent event) {
