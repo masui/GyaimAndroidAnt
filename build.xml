@@ -82,13 +82,14 @@
     <!-- version-tag: 1 -->
     <import file="${sdk.dir}/tools/ant/build.xml" />
 
+    <!-- JUnitによるテストを実行?
     <target name="junit">
-      <!-- JUnitによるテストを実行 -->
       <junit fork="yes" haltonfailure="yes">
 	<test name="${test.class.name}" />
 	<formatter type="plain" usefile="false" />
 	<classpath refid="test.classpath" />
       </junit>
     </target>
+    -->
     
 </project>

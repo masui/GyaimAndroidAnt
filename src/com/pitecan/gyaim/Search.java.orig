@@ -18,14 +18,14 @@ class Candidate {
     public Candidate(String pat, String word, int weight){
 	this.pat = pat;
 	this.word = word;
+	this.weight = weight;
     }
 }
 
 public class Search {
-    static LocalDict localDict;
-    static public SQLDict sqlDict;
-    static Gyaim gyaim;
-    static int nbuttons;
+    private static LocalDict localDict;
+    public static SQLDict sqlDict;
+    private static Gyaim gyaim;
 
     public static Candidate[] candidates = new Candidate[Gyaim.MAXCANDS];  // 候補単語リスト
     public static int ncands = 0;

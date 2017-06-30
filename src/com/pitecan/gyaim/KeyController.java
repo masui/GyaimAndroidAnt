@@ -1,5 +1,5 @@
 //
-//  Gyaimのキー操作に対するアクションメインルーチン
+//  Gyaimのキー操作に対するアクション (変換などの状態遷移)
 //
 package com.pitecan.gyaim;
 
@@ -11,19 +11,18 @@ import android.text.TextUtils;
 
 class KeyController {
 
-    public Gyaim gyaim;
-    public CandView candView;
-    public boolean useGoogle = true;
-    static public int nthCandSelected = 0; // 0のときは候補選択前
+    private static Gyaim gyaim;
+    private static CandView candView;
+    private static boolean useGoogle = true;
 
-    public static ArrayList<String> inputPatArray;
+    public static ArrayList<String> inputPatArray; // 入力文字の配列
 
-    private SearchTask searchTask = null;
-
-    private boolean japaneseInputMode = true;
-    private boolean exactMode = false;
-    private boolean shift = false;
-    private boolean alt = false;
+    // 状態変数
+    public static int nthCandSelected = 0; // 0のときは候補選択前
+    private static boolean japaneseInputMode = true;
+    private static boolean exactMode = false;
+    private static boolean shift = false;
+    private static boolean alt = false;
     
     public KeyController(Gyaim gyaim, CandView candView){
 	this.gyaim = gyaim;
@@ -35,6 +34,8 @@ class KeyController {
 	inputPatArray = new ArrayList<String>();
 	nthCandSelected = 0;
 	exactMode = false;
+	shift = false;
+	alt = false;
     }
 
     private void searchAndDispCand(){
@@ -42,7 +43,7 @@ class KeyController {
 	//
 	// バックグラウンドで検索実行
 	//
-	searchTask = new SearchTask(candView,useGoogle);
+	SearchTask searchTask = new SearchTask(candView,useGoogle);
 	searchTask.execute(inputPat());
     }
     
@@ -154,6 +155,9 @@ class KeyController {
 	    }
 	}
 	if(keyCode == KeyEvent.KEYCODE_SPACE){ // 候補選択
+	    if(inputPatArray.size() == 0){
+		return false;
+	    }
 	    nthCandSelected += 1;
 	    gyaim.showComposingText(Search.candidates[nthCandSelected-1].word);
 	    candView.invalidate(); // 候補表示更新
