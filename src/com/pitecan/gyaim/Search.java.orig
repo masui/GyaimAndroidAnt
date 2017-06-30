@@ -129,7 +129,7 @@ public class Search {
 
     public static void addCandidateWithLevel(String word, String pat, int level){
 	int i;
-	Message.message("Gyaim","addCandidate: word="+word+" pat="+pat+" ncands="+ncands+" level="+level);
+	//Message.message("Gyaim","addCandidate: word="+word+" pat="+pat+" ncands="+ncands+" level="+level);
 	if(ncands >= Gyaim.MAXCANDS) return;
 	for(i=0;i<ncands;i++){
 	    if(candidates[i].word == null) break;
@@ -139,7 +139,7 @@ public class Search {
 	    candidates[ncands].pat = pat;
 	    candidates[ncands].word = word;
 	    candidates[ncands].weight = level;
-	    Message.message("Gyaim", "Add "+word+" to candidates");
+	    //Message.message("Gyaim", "Add "+word+" to candidates");
 	    ncands++;
 	}
     }

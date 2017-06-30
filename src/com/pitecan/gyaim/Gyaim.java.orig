@@ -162,7 +162,7 @@ public class Gyaim extends InputMethodService
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
 	Log.v("Gyaim","onKeyUp - keyCode = "+keyCode);
-	return false;
+	return keyController.onKeyUp(keyCode, event);
     }
 
     //

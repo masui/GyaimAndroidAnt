@@ -182,7 +182,7 @@ public class LocalDict {
 		int matchlen = m.group(1).length();
 		if(matchlen == patlen && (!exactMode || exactMode && dict.get(d).pat.length() == matchlen)){ // 最後までマッチ
 		    addConnectedCandidate(dict.get(d).word, dict.get(d).pat, dict.get(d).outConnection, level, matchlen);
-		    Message.message("Gyaim","ncands = " + Search.ncands + ", fib1 = " + fib1);
+		    // Message.message("Gyaim","ncands = " + Search.ncands + ", fib1 = " + fib1);
 		    if(Search.ncands >= fib1){
 			searchTask.progress(0); //いくつかみつかったら画面更新
 			int tmp = fib1;

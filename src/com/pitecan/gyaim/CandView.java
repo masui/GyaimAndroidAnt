@@ -80,7 +80,7 @@ public class CandView extends View {
 	    textWidth = buttonTextPaint.measureText(button.text);
 	    canvas.drawText(button.text, textPos, 60, buttonTextPaint);
 	    textPos += (textWidth + 20.0);
-	    Message.message("Gyaim","text = " + button.text);
+	    // Message.message("Gyaim","text = " + button.text);
 	}
 	
     }

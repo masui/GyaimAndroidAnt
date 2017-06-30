@@ -51,7 +51,7 @@ public class SearchTask extends AsyncTask<String, Integer, Candidate[]> {
 
     private void updateView(){
 	int nbuttons = 0;
-	Message.message("Gyaim","Search.ncands = " + Search.ncands);
+	// Message.message("Gyaim","Search.ncands = " + Search.ncands);
 	if(Search.ncands > 0){
 	    for(;nbuttons<CandView.candButtons.length && nbuttons <Search.ncands;nbuttons++){
 		CandView.candButtons[nbuttons].text = Search.candidates[nbuttons].word;
