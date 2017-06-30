@@ -6,9 +6,6 @@
 //   - assertThat() みたいなのが使える
 // * 日本語でわかりやすくしてみたり
 //
-
-// package com.pitecan.gyaim;
-
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -46,14 +43,14 @@ public class LocalDictTest {
 
     @Test
     public void 単語登録チェック(){
-	boolean 漢字が登録されてる = false;
-	boolean 増井が登録されてる = false;
-	for(LocalDict.DictEntry entry: localDict.dict()) {
-	    if(entry.word().equals("漢字")) 漢字が登録されてる = true;
-	    if(entry.word().equals("増井")) 増井が登録されてる = true;
+	String 必須単語[] = { "漢字", "東京", "増井", "料理" };
+	for(String 単語: 必須単語){
+	    boolean 登録されてる = false;
+	    for(LocalDict.DictEntry entry: localDict.dict()) {
+		if(entry.word().equals(単語)) 登録されてる = true;
+	    }
+	    assertThat(登録されてる,is(true));
 	}
-	assertThat(漢字が登録されてる,is(true));
-	assertThat(増井が登録されてる,is(true));
     }
 
     @Test
@@ -68,7 +65,7 @@ public class LocalDictTest {
 	}
 	assertTrue(考えるが検索された);
 
-	localDict.search("atarashi",new SearchTask());
+	localDict.search("atarashii",new SearchTask());
 	assertTrue(Search.words.size() > 0);
 	boolean 新しいが検索された = false;
 	for(String word: Search.words) {
