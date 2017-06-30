@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.Build; // for Build.VERSION.SDK_INT
 import android.view.View;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.widget.Button;
 import android.util.Log;
 
@@ -164,6 +165,13 @@ public class Gyaim extends InputMethodService
 	Log.v("Gyaim","onKeyUp - keyCode = "+keyCode);
 	return keyController.onKeyUp(keyCode, event);
     }
+
+    // こういうものはないようだが
+    //public boolean onTouchEvent(MotionEvent event) {
+    //	Message.message("Gyaim","onTouchEvent - ");
+    //	return false;
+    //}
+	
 
     //
     // ConnectivityManagerというのを使って、ネットが使えるかどうかを判断し、

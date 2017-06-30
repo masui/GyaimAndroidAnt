@@ -97,7 +97,6 @@ public class Search {
 
 	Message.message("Gyaim","UseGoogle = " + useGoogle);
 	if(!searchTask.isCancelled()){
-	    // if(true){
 	    // Google Suggest または Google日本語入力を利用
 	    if(useGoogle){
 		Message.message("Gyaim","isConnected() = " + gyaim.isConnected());
