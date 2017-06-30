@@ -45,11 +45,11 @@ class KeyController {
 	searchTask.execute(inputPat());
     }
     
-    public String inputPat(){
+    private String inputPat(){
 	return TextUtils.join("",inputPatArray);
     }
 
-    void fix(){
+    private void fix(){
 	if(nthCandSelected > 0){ // 候補選択状態
 	    gyaim.input(Search.candidates[nthCandSelected-1].word);
 	}
@@ -59,18 +59,19 @@ class KeyController {
 	resetInput();
     }
     
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    boolean onKeyDown(int keyCode, KeyEvent event) {
 	if(keyCode == KeyEvent.KEYCODE_SYM){
 	    // SYMキーのデフォルト動作(?)は変なダイアログが出るので
 	    // モード切り換えに利用してみる
 	    japaneseInputMode = !japaneseInputMode;;
 	    candView.setVisibility(japaneseInputMode ? View.VISIBLE : View.GONE);
-	    return true;
+	    fix();
 	}
 	if(keyCode == KeyEvent.KEYCODE_SHIFT_RIGHT){
 	    // 右シフトキーで日本語モード/素通しモード切替
 	    japaneseInputMode = !japaneseInputMode;
 	    candView.setVisibility(japaneseInputMode ? View.VISIBLE : View.GONE);
+	    fix();
 	}
 	if(! japaneseInputMode){
 	    // 日本語モードでないときはfalseを返して素通しデフォルト動作(?)させる
@@ -85,7 +86,7 @@ class KeyController {
 	    char[] charArray = Character.toChars(code);
 	    String s = new String(charArray);
 
-	    if(nthCandSelected > 0){ // 候補選択状態
+	    if(nthCandSelected > 0){ // 候補選択状態だったら確定する
 		fix();
 	    }
 		
@@ -94,22 +95,13 @@ class KeyController {
 	    
 	    searchAndDispCand();
 	}
-	if(keyCode == KeyEvent.KEYCODE_SPACE){
+	if(keyCode == KeyEvent.KEYCODE_SPACE){ // 候補選択
 	    nthCandSelected += 1;
 	    gyaim.showComposingText(Search.candidates[nthCandSelected-1].word);
 	    candView.invalidate(); // 候補表示更新
 	}
 	if(keyCode == KeyEvent.KEYCODE_ENTER){ // 確定
 	    fix();
-	    /*
-	    if(nthCandSelected > 0){ // 候補選択状態
-		gyaim.input(Search.candidates[nthCandSelected-1].word);
-	    }
-	    else {
-		gyaim.input(inputPat());
-	    }
-	    resetInput();
-	    */
 	}
 	if(keyCode == KeyEvent.KEYCODE_DEL){
 	    if(nthCandSelected > 0){ // 候補選択状態

@@ -11,6 +11,10 @@ import android.inputmethodservice.InputMethodService;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
+import android.view.inputmethod.CursorAnchorInfo;
+
+// import android.inputmethodservice.InputMethodService;
+// import android.inputmethodservice.*;
 
 import android.os.Bundle;
 import android.os.Build; // for Build.VERSION.SDK_INT
@@ -85,6 +89,10 @@ public class Gyaim extends InputMethodService
      */
     @Override public void onStartInput(EditorInfo attribute, boolean restarting) {
         super.onStartInput(attribute, restarting);
+
+	// カーソル位置を知らせる?
+	InputConnection ic = getCurrentInputConnection();
+	ic.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR);
     }
 
     /**
@@ -102,19 +110,13 @@ public class Gyaim extends InputMethodService
 	return candView;
     }
 
-    // CandidatesViewを使うといいかと思ったが全部自力の方がよさげなのでやめる
-    //@Override public View onCreateCandidatesView() {
-    //    //candView = (CandView) getLayoutInflater().inflate(R.layout.input, null);
-    //	//Log.v("Gyaim-----------","onCreateCandidatesView candview = "+candView);
-    //	//return candView;
-    //	return null;
-    //}
-	
     /*
     @Override public void onStartInputView(EditorInfo info, boolean restarting) {
 	super.onStartInputView(info,restarting); // 必要??
     }
+    */
 
+    /*
     @Override public void onFinishInput() {
 	super.onFinishInput();
     }
@@ -197,5 +199,16 @@ public class Gyaim extends InputMethodService
     }
 
     public void logWord(String word){
+    }
+
+    @Override
+    public void onUpdateCursorAnchorInfo(CursorAnchorInfo cursorAnchorInfo){
+	/*
+	InputConnection ic = getCurrentInputConnection();
+	ic.requestCursorUpdates(int cursorUpdateMode)
+	cursorAnchorInfo.getInsertionMarkerHorizontal() (x)
+	    and cursorAnchorInfo.getInsertionMarkerTop() (y).
+	*/
+	Message.message("Gyaim","Cursor Pos = " + cursorAnchorInfo.getInsertionMarkerTop());
     }
 }
