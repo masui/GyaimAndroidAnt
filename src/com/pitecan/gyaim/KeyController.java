@@ -14,7 +14,7 @@ class KeyController {
     public Gyaim gyaim;
     public CandView candView;
     public boolean useGoogle = false;
-    int nthCandSelected = 0;
+    static public int nthCandSelected = 0; // 0のときは候補選択前
 
     public ArrayList<String> inputPatArray;
 
@@ -48,6 +48,16 @@ class KeyController {
     public String inputPat(){
 	return TextUtils.join("",inputPatArray);
     }
+
+    void fix(){
+	if(nthCandSelected > 0){ // 候補選択状態
+	    gyaim.input(Search.candidates[nthCandSelected-1].word);
+	}
+	else {
+	    gyaim.input(inputPat());
+	}
+	resetInput();
+    }
     
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 	if(keyCode == KeyEvent.KEYCODE_SYM){
@@ -57,8 +67,9 @@ class KeyController {
 	    candView.setVisibility(japaneseInputMode ? View.VISIBLE : View.GONE);
 	    return true;
 	}
-	if(keyCode == KeyEvent.KEYCODE_SHIFT_RIGHT){ // 右シフトキーで日本語モード/素通しモード切替
-	    japaneseInputMode = !japaneseInputMode;;
+	if(keyCode == KeyEvent.KEYCODE_SHIFT_RIGHT){
+	    // 右シフトキーで日本語モード/素通しモード切替
+	    japaneseInputMode = !japaneseInputMode;
 	    candView.setVisibility(japaneseInputMode ? View.VISIBLE : View.GONE);
 	}
 	if(! japaneseInputMode){
@@ -73,7 +84,11 @@ class KeyController {
 	    int code = 0x61 + (keyCode - KeyEvent.KEYCODE_A);
 	    char[] charArray = Character.toChars(code);
 	    String s = new String(charArray);
-	    
+
+	    if(nthCandSelected > 0){ // 候補選択状態
+		fix();
+	    }
+		
 	    inputPatArray.add(s);
 	    gyaim.showComposingText(inputPat());
 	    
@@ -82,8 +97,11 @@ class KeyController {
 	if(keyCode == KeyEvent.KEYCODE_SPACE){
 	    nthCandSelected += 1;
 	    gyaim.showComposingText(Search.candidates[nthCandSelected-1].word);
+	    candView.invalidate(); // 候補表示更新
 	}
-	if(keyCode == KeyEvent.KEYCODE_ENTER){
+	if(keyCode == KeyEvent.KEYCODE_ENTER){ // 確定
+	    fix();
+	    /*
 	    if(nthCandSelected > 0){ // 候補選択状態
 		gyaim.input(Search.candidates[nthCandSelected-1].word);
 	    }
@@ -91,6 +109,7 @@ class KeyController {
 		gyaim.input(inputPat());
 	    }
 	    resetInput();
+	    */
 	}
 	if(keyCode == KeyEvent.KEYCODE_DEL){
 	    if(nthCandSelected > 0){ // 候補選択状態
@@ -101,6 +120,7 @@ class KeyController {
 		else {
 		    gyaim.showComposingText(inputPat());
 		}
+		candView.invalidate(); // 候補表示更新
 	    }
 	    else {
 		int size = inputPatArray.size();
@@ -110,7 +130,7 @@ class KeyController {
 		    searchAndDispCand();
 		}
 		else {
-		    return false; // 変換中でないときはデフォルト動作
+		    return false; // 変換中でないのでデフォルト動作
 		}
 	    }
 	}

@@ -172,7 +172,7 @@ public class CandView extends View {
 	float textWidth;
 	
 	for(int i=0;i<5;i++){
-	    button = candButtons[i];
+	    button = candButtons[i + KeyController.nthCandSelected];
 	    //if(! button.visible) continue; どうなってるのか
 	    textWidth = buttonTextPaint.measureText(button.text);
 	    canvas.drawText(button.text, textPos, 60, buttonTextPaint);
