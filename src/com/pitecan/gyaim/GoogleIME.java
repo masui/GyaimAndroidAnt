@@ -6,29 +6,19 @@ import org.json.*;
 
 import java.io.*;
 
-/*
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-*/
 
-/*
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams; 
-*/
 
-//// import org.apache.http.util.EntityUtils;
+import org.apache.http.util.EntityUtils;
 
 class GoogleIME {
     static String[] ime(String q){
-	String[] suggestions;
-	suggestions = new String[20];
-	suggestions[0] = "suggest";
-	return suggestions;
-
-	/*
 	// Google CGI API for Japanese Input
 	// http://www.google.co.jp/ime/cgiapi.html
 	// Google日本語入力のURLは "http://google.co.jp/transliterate?langpair=ja-Hira|ja&text=かんじ" のような形式だが
@@ -41,12 +31,12 @@ class GoogleIME {
 
 	String jsonText = "[[\"\",[]]]";
 
-	//Log.d("Slime", urlstr);
+	//Log.d("Gyaim", urlstr);
 
 	try {
 	    // http://stackoverflow.com/questions/693997/how-to-set-httpresponse-timeout-for-android-in-java
 	    HttpParams httpParameters = new BasicHttpParams();
-	    //Log.d("Slime", "parameters = " + httpParameters);
+	    //Log.d("Gyaim", "parameters = " + httpParameters);
 	    // Set the timeout in milliseconds until a connection is established.
 	    int timeoutConnection = 1500;
 	    HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
@@ -55,20 +45,20 @@ class GoogleIME {
 	    int timeoutSocket = 1500;
 	    HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
 	    DefaultHttpClient httpClient = new DefaultHttpClient(httpParameters);
-	    //Log.d("Slime", "defaulthttpclient = " + httpClient);
+	    //Log.d("Gyaim", "defaulthttpclient = " + httpClient);
 
 	    //DefaultHttpClient httpClient = new DefaultHttpClient();
 
 	    httpClient.getParams().setParameter("http.protocol.content-charset", "UTF-8");
-	    //Log.d("Slime", "setParameter");
+	    //Log.d("Gyaim", "setParameter");
 
 	    HttpGet request = new HttpGet(urlstr);
-	    //Log.d("Slime", "request = " + request);
+	    //Log.d("Gyaim", "request = " + request);
 	    HttpResponse httpResponse = null;
 	    try {
-		//Log.d("Slime", "Google Execute");
+		//Log.d("Gyaim", "Google Execute");
 		httpResponse = httpClient.execute(request);
-		//Log.d("Slime", "Response get");
+		//Log.d("Gyaim", "Response get");
 	    } catch (Exception e) {
 		//Log.d("HttpSampleActivity", "Error Execute");
 	    }
@@ -78,10 +68,10 @@ class GoogleIME {
 		    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		    jsonText = EntityUtils.toString(httpResponse.getEntity(), "UTF-8"); // これが大事らしいが...
 		} catch (Exception e) {
-		    //Log.d("Slime HttpSampleActivity", "Error");
+		    //Log.d("Gyaim HttpSampleActivity", "Error");
 		}
 	    } else {
-		//Log.d("Slime HttpSampleActivity", "Status" + status);
+		//Log.d("Gyaim HttpSampleActivity", "Status" + status);
 	    }
 
 	    // http://www.google.co.jp/ime/cgiapi.html
@@ -122,12 +112,11 @@ class GoogleIME {
 		}
 	    }
 	    catch(JSONException e){
-		Log.e("Slime", "JSON Exception " + e);
+		Log.e("Gyaim", "JSON Exception " + e);
 	    }
 	} catch (Exception e){
-	    Log.v("Slime","GoogleIME error");
+	    Log.v("Gyaim","GoogleIME error");
 	}
 	return suggestions;
-	*/
     }
 }

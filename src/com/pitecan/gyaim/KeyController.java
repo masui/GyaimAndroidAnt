@@ -13,10 +13,10 @@ class KeyController {
 
     public Gyaim gyaim;
     public CandView candView;
-    public boolean useGoogle = false;
+    public boolean useGoogle = true;
     static public int nthCandSelected = 0; // 0のときは候補選択前
 
-    public ArrayList<String> inputPatArray;
+    public static ArrayList<String> inputPatArray;
 
     private SearchTask searchTask = null;
 
@@ -49,7 +49,7 @@ class KeyController {
 	searchTask.execute(inputPat());
     }
     
-    private String inputPat(){
+    public static String inputPat(){
 	return TextUtils.join("",inputPatArray);
     }
 

@@ -28,8 +28,8 @@ import android.content.Context;
 // import android.content.ClipData;
 // import android.content.ClipboardManager;
 
-////import android.net.ConnectivityManager;
-/////import android.net.NetworkInfo;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 // 単語書き出し用
 ////import java.io.FileOutputStream;
@@ -176,7 +176,14 @@ public class Gyaim extends InputMethodService
     // メソッドがActivityの中でしか使えないのでここで定義する。
     //
     public Boolean isConnected(){
-	return false;
+	ConnectivityManager connManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+	NetworkInfo networkInfo = connManager.getActiveNetworkInfo();
+	Message.message("Gyaim","networkInfo = " + networkInfo);
+	if(networkInfo != null && networkInfo.isConnected()){
+	    return true;
+	}else{
+	    return false;
+	}
     }
 
     public void logWord(String word){
