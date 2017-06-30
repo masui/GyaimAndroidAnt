@@ -21,6 +21,7 @@ class KeyController {
     private SearchTask searchTask = null;
 
     private boolean japaneseInputMode = true;
+    private boolean exactMode = false;
     
     public KeyController(Gyaim gyaim, CandView candView){
 	this.gyaim = gyaim;
@@ -31,6 +32,7 @@ class KeyController {
     void resetInput(){
 	inputPatArray = new ArrayList<String>();
 	nthCandSelected = 0;
+	exactMode = false;
     }
     
     void reset(){
@@ -101,7 +103,19 @@ class KeyController {
 	    candView.invalidate(); // 候補表示更新
 	}
 	if(keyCode == KeyEvent.KEYCODE_ENTER){ // 確定
-	    fix();
+	    if(inputPatArray.size() == 0){
+		return false;
+	    }
+	    if(nthCandSelected > 0 || exactMode){
+		fix();
+		exactMode = false;
+		LocalDict.exactMode = false;
+	    }
+	    else {
+		exactMode = true;
+		LocalDict.exactMode = true;
+		searchAndDispCand();
+	    }
 	}
 	if(keyCode == KeyEvent.KEYCODE_DEL){
 	    if(nthCandSelected > 0){ // 候補選択状態

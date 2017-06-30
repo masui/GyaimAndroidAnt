@@ -187,7 +187,7 @@ public class Romakana {
 	{"-",	"ー",	"ー"}
     };
 
-    static String substring(String s, int start, int end){
+    static private String substring(String s, int start, int end){
 	int len = s.length();
 	if(start < 0 || start >= len) return "";
 	if(end < start || end > len) return "";
@@ -209,7 +209,6 @@ public class Romakana {
 	boolean found;
 
 	while(ind < roma.length()){
-	    // System.out.println("Ind = "+ind);
 	    found = false;
 	    for(int i=0;i<RKTABLE.length;i++){
 		String r = RKTABLE[i][0];
@@ -222,7 +221,6 @@ public class Romakana {
 		    break;
 		}
 	    }
-	    // System.out.println("Found = " + found);
 	    if(!found){
 		String r0 = substring(roma,ind,ind+1);
 		String r1 = substring(roma,ind+1,ind+2);
@@ -250,11 +248,4 @@ public class Romakana {
 	}
 	return kana;
     }
-
-    /*
-    public static void main(String[] args){
-	System.out.println(roma2hiragana("vaiagura"));
-	System.out.println(roma2katakana("vaiagura"));
-    }
-    */
 }

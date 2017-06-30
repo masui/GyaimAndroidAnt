@@ -87,9 +87,11 @@ public class Gyaim extends InputMethodService
     @Override public void onStartInput(EditorInfo attribute, boolean restarting) {
         super.onStartInput(attribute, restarting);
 
+	/*
 	// カーソル位置を知らせる?
 	InputConnection ic = getCurrentInputConnection();
 	ic.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR);
+	*/
     }
 
     /**

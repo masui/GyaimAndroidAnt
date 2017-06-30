@@ -31,7 +31,7 @@ public class Search {
     public static Candidate[] candidates = new Candidate[Gyaim.MAXCANDS];  // 候補単語リスト
     public static int ncands = 0;
 
-    public Search(/* LocalDict localDict,*/ /* SQLDict sqlDict, */Gyaim gyaim){
+    public Search(Gyaim gyaim){
 	localDict = null;
 	try {
 	    AssetManager as = gyaim.getResources().getAssets();
@@ -40,8 +40,6 @@ public class Search {
 	} catch (IOException e) {  
 	    //e.printStackTrace();  
 	}
-	//this.localDict = localDict;
-	//this.sqlDict = sqlDict;
 	this.gyaim = gyaim;
 	for(int i=0;i<Gyaim.MAXCANDS;i++){
 	    candidates[i] = new Candidate("","",0);
@@ -55,20 +53,17 @@ public class Search {
     //
     // いろんな辞書を使った検索!
     //
-    public static Candidate[] search(String pat, /* String word, */ boolean useGoogle, SearchTask searchTask){
+    public static Candidate[] search(String pat, boolean useGoogle, SearchTask searchTask){
 	Message.message("Gyaim","Search - pat="+pat);
 	ncands = 0;
-	// KeyController.candPage = 1;
 
-	/*
 	// ひらがな/カタカナ
 	if(LocalDict.exactMode){
-	    String hira = word;
-	    String p = Keys.hira2pat(hira); // 無理矢理ひらがなをローマ字パタンに変換
-	    addCandidateWithLevel(hira,p,-100);
-	    addCandidateWithLevel(h2k(hira),p,-99);
+	    String hiragana = Romakana.roma2hiragana(pat);
+	    String katakana = Romakana.roma2katakana(pat);
+	    addCandidateWithLevel(hiragana,pat,-100);
+	    addCandidateWithLevel(katakana,pat,-99);
 	}
-	*/
 
 	/* ////
 	// コピーした単語を候補に出す (新規登録用)

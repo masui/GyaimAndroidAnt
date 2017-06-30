@@ -1,3 +1,5 @@
+.PHONY: test
+
 VERSIONCODE=1
 VERSION=0.0.1
 
@@ -26,6 +28,9 @@ clean:
 push:
 	git push pitecan.com:/home/masui/git/GyaimAndroid.git
 	git push git@github.com:masui/GyaimAndroid.git
+
+test:
+	cd test; make; make test
 
 # 署名してアップロード
 publish: clean
