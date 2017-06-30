@@ -13,9 +13,6 @@ import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.CursorAnchorInfo;
 
-// import android.inputmethodservice.InputMethodService;
-// import android.inputmethodservice.*;
-
 import android.os.Bundle;
 import android.os.Build; // for Build.VERSION.SDK_INT
 import android.view.View;
@@ -23,7 +20,7 @@ import android.view.KeyEvent;
 import android.widget.Button;
 import android.util.Log;
 
-import android.widget.AbsoluteLayout; // これがあるとコンパイラに文句を言われる
+// import android.widget.AbsoluteLayout; // これがあるとコンパイラに文句を言われる
 
 import android.content.Context;
 ////import android.text.ClipboardManager;
@@ -75,7 +72,6 @@ public class Gyaim extends InputMethodService
      */
     @Override public void onInitializeInterface() {
 	super.onInitializeInterface(); // 必要??
-	//keyController = new KeyController(this,candView); // ここはアカン!
     }
     
     /**
@@ -105,21 +101,12 @@ public class Gyaim extends InputMethodService
         candView = (CandView) getLayoutInflater().inflate(R.layout.input, null);
 	Log.v("Gyaim-----------","candView = " + candView);
 
+	InputConnection ic = getCurrentInputConnection();
+	ic.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR);
+	
 	keyController = new KeyController(this,candView); // この場所?
 	return candView;
     }
-
-    /*
-    @Override public void onStartInputView(EditorInfo info, boolean restarting) {
-	super.onStartInputView(info,restarting); // 必要??
-    }
-    */
-
-    /*
-    @Override public void onFinishInput() {
-	super.onFinishInput();
-    }
-    */
 
     public void input(String s){
 	InputConnection ic = getCurrentInputConnection();
@@ -141,11 +128,6 @@ public class Gyaim extends InputMethodService
 	}
     }
     
-    //public void hide(){
-    //	// requestHideSelf(0); // IMEのViewを隠す
-    //	candView.setVisibility(View.GONE);
-    //}
-
     //
     // 新規登録用にクリップボードの単語を返す
     //

@@ -58,13 +58,22 @@ public class LocalDictTest {
 
     @Test
     public void 検索テスト(){
-	localDict.search("kaNgae",new SearchTask());
+	// localDict.search("kaNgae",new SearchTask());
+
+	localDict.search("kangae",new SearchTask());
 	assertTrue(Search.words.size() > 0);
 	boolean 考えるが検索された = false;
 	for(String word: Search.words) {
 	    if(word.equals("考える")) 考えるが検索された = true;
 	}
-	assertThat(考えるが検索された,is(true));
 	assertTrue(考えるが検索された);
+
+	localDict.search("atarashi",new SearchTask());
+	assertTrue(Search.words.size() > 0);
+	boolean 新しいが検索された = false;
+	for(String word: Search.words) {
+	    if(word.equals("新しい")) 新しいが検索された = true;
+	}
+	assertTrue(新しいが検索された);
     }
 }

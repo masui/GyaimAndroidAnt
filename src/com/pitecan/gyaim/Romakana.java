@@ -225,7 +225,7 @@ public class Romakana {
 		String r0 = substring(roma,ind,ind+1);
 		String r1 = substring(roma,ind+1,ind+2);
 		if((r0.equals("n") || r0.equals("N")) && ("bcdfghjklmnpqrstvwxz".indexOf(r1) >= 0)){
-		    kana += "ん";
+		    kana += (hiragana ? "ん" : "ン");
 		    ind += 1;
 		}
 		else {

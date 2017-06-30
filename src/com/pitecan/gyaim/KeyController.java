@@ -59,20 +59,27 @@ class KeyController {
 	    gyaim.input(inputPat());
 	}
 	resetInput();
+	Search.reset();
+	candView.invalidate();
     }
     
     boolean onKeyDown(int keyCode, KeyEvent event) {
+	if(keyCode == KeyEvent.KEYCODE_BACK){ // 画面上の左矢印キー
+	    return false;
+	}
 	if(keyCode == KeyEvent.KEYCODE_SYM){
 	    // SYMキーのデフォルト動作(?)は変なダイアログが出るので
 	    // モード切り換えに利用してみる
 	    japaneseInputMode = !japaneseInputMode;;
 	    candView.setVisibility(japaneseInputMode ? View.VISIBLE : View.GONE);
+	    resetInput();
 	    fix();
 	}
 	if(keyCode == KeyEvent.KEYCODE_SHIFT_RIGHT){
 	    // 右シフトキーで日本語モード/素通しモード切替
 	    japaneseInputMode = !japaneseInputMode;
 	    candView.setVisibility(japaneseInputMode ? View.VISIBLE : View.GONE);
+	    resetInput();
 	    fix();
 	}
 	if(! japaneseInputMode){
@@ -115,6 +122,11 @@ class KeyController {
 		exactMode = true;
 		LocalDict.exactMode = true;
 		searchAndDispCand();
+
+		nthCandSelected += 1;
+		//gyaim.showComposingText(Search.candidates[nthCandSelected-1].word);
+		gyaim.showComposingText(Romakana.roma2hiragana(inputPat())); // これは苦しい
+		candView.invalidate(); // 候補表示更新
 	    }
 	}
 	if(keyCode == KeyEvent.KEYCODE_DEL){
