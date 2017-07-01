@@ -11,19 +11,19 @@ public class RomakanaTest {
     public RomakanaTest(){
     }
 
+    String testdata[][] = {
+	{ "masui", "ますい", "マスイ" },
+	{ "dhisukushisutemu", "でぃすくしすてむ", "ディスクシステム" },
+	{ "vaiorin", "う゛ぁいおりん", "ヴァイオリン"},
+	{ "hannnya", "はんにゃ", "ハンニャ"}
+    };
+
     @Test
-    public void ますい(){
-	assertTrue(Romakana.roma2hiragana("masui").equals("ますい"));
-    }
-    
-    public void violin(){
-	assertTrue(Romakana.roma2hiragana("vaiorin").equals("う゛ぁいおりん"));
-	assertTrue(Romakana.roma2hiragana("vaiorin").equals("ヴァイオリン"));
-    }
-    
-    @Test
-    public void ハンニャ(){
-	assertTrue(Romakana.roma2katakana("hannnya").equals("ハンニャ"));
+    public void かな変換テスト(){
+	for(String[] data: testdata){
+	    assertTrue(Romakana.roma2hiragana(data[0]).equals(data[1]));
+	    assertTrue(Romakana.roma2katakana(data[0]).equals(data[2]));
+	}
     }
 }
 
