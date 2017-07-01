@@ -26,6 +26,8 @@ clean:
 push:
 	git push pitecan.com:/home/masui/git/GyaimAndroid.git
 	git push git@github.com:masui/GyaimAndroid.git
+upload:
+	scp bin/Gyaim-debug.apk pitecan.com:/www/www.pitecan.com/gyaim.apk
 
 #
 # 辞書と検索のテスト
