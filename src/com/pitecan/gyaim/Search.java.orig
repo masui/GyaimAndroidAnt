@@ -29,6 +29,7 @@ public class Search {
 
     public static Candidate[] candidates = new Candidate[Gyaim.MAXCANDS];  // 候補単語リスト
     public static int ncands = 0;
+    public static boolean useGoogle = true;
 
     public Search(Gyaim gyaim){
 	this.gyaim = gyaim;
@@ -60,7 +61,7 @@ public class Search {
     //
     // いろんな辞書を使った検索!
     //
-    public static Candidate[] search(String pat, boolean useGoogle, SearchTask searchTask){
+    public static Candidate[] search(String pat, SearchTask searchTask){
 	Message.message("Gyaim","Search - pat="+pat);
 	ncands = 0;
 

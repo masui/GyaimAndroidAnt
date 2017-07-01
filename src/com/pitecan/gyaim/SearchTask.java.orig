@@ -7,11 +7,9 @@ import android.util.Log;
 public class SearchTask extends AsyncTask<String, Integer, Candidate[]> {
 
     private CandView candView;
-    private boolean useGoogle;
 
-    public SearchTask(CandView candView, boolean useGoogle){
+    public SearchTask(CandView candView){
 	this.candView = candView;
-	this.useGoogle = useGoogle;
 	Message.message("Gyaim","SearchTask: candView = " + candView);
     }
 
@@ -19,21 +17,25 @@ public class SearchTask extends AsyncTask<String, Integer, Candidate[]> {
 	publishProgress(0);
     }
 
-    // SearchTask.execute() でこれが呼ばれるのだと思う
+    //
+    // SearchTask.execute() でこれが呼ばれる
+    //
     protected Candidate[] doInBackground(String... searchParams){ // Result の型を返す 引数はParamsの型
 	Message.message("Gyaim","doInBackground start......");
 	
 	Candidate[] res;
 	String pat = searchParams[0];
 	//String word = searchParams[1];
-	if(pat != ""){
-	    res = Search.search(pat,useGoogle,this); // this.cancel()が呼ばれるとthis.isCancelled()がtrueになる
+	//if(pat != ""){
+	if(! pat.equals("")){
+	    res = Search.search(pat,this); // this.cancel()が呼ばれるとthis.isCancelled()がtrueになる
 	    if(isCancelled()){
 	    }
 	}
 	else {
 	    Search.ncands = 0;
-	    /*
+
+	    // 以下は何故か動かない?
 	    Search.addCandidateWithLevel("が","ga",0);
 	    Search.addCandidateWithLevel("は","ha",0);
 	    Search.addCandidateWithLevel("の","no",0);
@@ -41,8 +43,9 @@ public class SearchTask extends AsyncTask<String, Integer, Candidate[]> {
 	    Search.addCandidateWithLevel("を","wo",0);
 	    Search.addCandidateWithLevel("。",".",0);
 	    Search.addCandidateWithLevel("、",",",0);
-	    */
+
 	    res = Search.candidates;
+	    updateView();
 	}
 
 	Message.message("Gyaim","doInBackground end");
@@ -50,15 +53,15 @@ public class SearchTask extends AsyncTask<String, Integer, Candidate[]> {
     }
 
     private void updateView(){
-	int nbuttons = 0;
 	// Message.message("Gyaim","Search.ncands = " + Search.ncands);
+	int i = 0;
 	if(Search.ncands > 0){
-	    for(;nbuttons<CandView.candButtons.length && nbuttons <Search.ncands;nbuttons++){
-		CandView.candButtons[nbuttons].text = Search.candidates[nbuttons].word;
-		CandView.candButtons[nbuttons].pat = Search.candidates[nbuttons].pat;
+	    for(i=0;i<CandView.candButtons.length && i <Search.ncands;i++){
+		CandView.candButtons[i].text = Search.candidates[i].word;
+		CandView.candButtons[i].pat = Search.candidates[i].pat;
 	    }
 	}
-	for(int i = nbuttons;i<CandView.candButtons.length;i++){
+	for(;i<CandView.candButtons.length;i++){
 	    CandView.candButtons[i].text = "";
 	    CandView.candButtons[i].pat = "";
 	}

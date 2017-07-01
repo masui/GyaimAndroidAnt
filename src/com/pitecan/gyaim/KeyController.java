@@ -13,7 +13,6 @@ class KeyController {
 
     private static Gyaim gyaim;
     private static CandView candView;
-    private static boolean useGoogle = true;
 
     public static ArrayList<String> inputPatArray; // 入力文字の配列
 
@@ -44,7 +43,7 @@ class KeyController {
 	//
 	// バックグラウンドで検索実行
 	//
-	SearchTask searchTask = new SearchTask(candView,useGoogle);
+	SearchTask searchTask = new SearchTask(candView);
 	searchTask.execute(inputPat());
     }
     
