@@ -40,6 +40,7 @@ class KeyController {
 
     private void searchAndDispCand(){
 	Message.message("Gyaim","searchAndDispCand()");
+	Message.message("Gyaim","searchAndDispCand(): candView = " + candView);
 	//
 	// バックグラウンドで検索実行
 	//

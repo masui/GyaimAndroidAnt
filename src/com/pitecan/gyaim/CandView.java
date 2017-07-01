@@ -68,7 +68,7 @@ public class CandView extends View {
 	// Message.message("Gyaim","onDraw----------------------------");
 	canvas.drawColor(0xffddddff);
 	
-	setY(0); // よくわからない
+	setY(20); // よくわからない
 
 	CandButton button;
 	float textPos = 20;
@@ -91,7 +91,7 @@ public class CandView extends View {
 	int width = MeasureSpec.getSize(widthMeasureSpec);
 	int height = MeasureSpec.getSize(heightMeasureSpec);
 
-        setMeasuredDimension(1200,80);
+        setMeasuredDimension(1200,200);
 
 	// self.layout()
 	
