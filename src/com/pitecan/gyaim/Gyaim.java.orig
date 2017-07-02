@@ -256,7 +256,17 @@ public class Gyaim extends InputMethodService
 	Log.v("Gyaim","bottommargin = "+mlp.bottomMargin);
 	Log.v("Gyaim","leftmargin = "+mlp.leftMargin);
 	Log.v("Gyaim","rightmargin = "+mlp.rightMargin);
-	mlp.setMargins(mlp.leftMargin, mlp.topMargin, mlp.rightMargin, 100);
+
+	int markerTop = (int)cursorAnchorInfo.getInsertionMarkerTop();
+	int margin;
+	if(Float.isNaN(floc[1])){
+	    margin = 0;
+	}
+	else {
+	    //margin = 1400 - (int)(f[2] + f[5] + markerTop);
+	    margin = 1460 - (int)(floc[1] + markerTop);
+	}
+	mlp.setMargins(mlp.leftMargin, mlp.topMargin, mlp.rightMargin, margin); // これで表示場所を変えられる
 	//マージンを設定
 	candView.setLayoutParams(mlp);
 	
