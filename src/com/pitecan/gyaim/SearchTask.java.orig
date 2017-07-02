@@ -34,7 +34,7 @@ public class SearchTask extends AsyncTask<String, Integer, Candidate[]> {
 	}
 	else {
 	    Search.ncands = 0;
-
+	    /*
 	    // 以下は何故か動かない?
 	    Search.addCandidateWithLevel("が","ga",0);
 	    Search.addCandidateWithLevel("は","ha",0);
@@ -43,9 +43,9 @@ public class SearchTask extends AsyncTask<String, Integer, Candidate[]> {
 	    Search.addCandidateWithLevel("を","wo",0);
 	    Search.addCandidateWithLevel("。",".",0);
 	    Search.addCandidateWithLevel("、",",",0);
+	    */
 
 	    res = Search.candidates;
-	    updateView();
 	}
 
 	Message.message("Gyaim","doInBackground end");
@@ -80,12 +80,13 @@ public class SearchTask extends AsyncTask<String, Integer, Candidate[]> {
 
     @Override
     protected void onPostExecute(Candidate[] candidates) { // Result の型の値が引数に入る doInBackgroundの返り値
-	// Log.v("Gyaim","onPostExecute");
+	Log.v("Gyaim","onPostExecute");
 	// ここで候補を表示する
 	updateView();
     }
 
+    @Override
     protected void onCancelled(Candidate[] candidates){
-	// Log.v("Gyaim","onCancelled");
+	Log.v("Gyaim","onCancelled");
     }
 }

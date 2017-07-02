@@ -22,6 +22,8 @@ class KeyController {
     private static boolean exactMode = false;
     private static boolean shift = false;
     private static boolean alt = false;
+
+    private SearchTask searchTask = null;
     
     public KeyController(Gyaim gyaim, CandView candView){
 	this.gyaim = gyaim;
@@ -43,7 +45,7 @@ class KeyController {
 	//
 	// バックグラウンドで検索実行
 	//
-	SearchTask searchTask = new SearchTask(candView);
+	searchTask = new SearchTask(candView);
 	searchTask.execute(inputPat());
     }
     
@@ -68,6 +70,9 @@ class KeyController {
     }
     
     boolean onKeyDown(int keyCode, KeyEvent event) {
+	if(searchTask != null){
+	    searchTask.cancel(true); // キー入力があったらバックグラウンド検索を中止
+	}
 	if(keyCode == KeyEvent.KEYCODE_BACK){ // 画面上の左矢印キー
 	    return false;
 	}

@@ -66,6 +66,7 @@ public class CandView extends View {
 
     @Override public void onDraw(Canvas canvas) {
 	// Message.message("Gyaim","onDraw----------------------------");
+
 	canvas.drawColor(0xffddddff);
 	
 	setY(20); // よくわからない
