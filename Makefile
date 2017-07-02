@@ -1,5 +1,5 @@
 VERSIONCODE=1
-VERSION=0.0.1
+VERSION=0.0.2
 
 build: local.properties setsrc
 	sed -e "s/VERSIONCODE/${VERSIONCODE}/" AndroidManifest.template | sed -e "s/VERSION/${VERSION}/" > AndroidManifest.xml
@@ -27,7 +27,7 @@ push:
 	git push pitecan.com:/home/masui/git/GyaimAndroid.git
 	git push git@github.com:masui/GyaimAndroid.git
 upload:
-	scp bin/Gyaim-debug.apk pitecan.com:/www/www.pitecan.com/gyaim.apk
+	scp bin/Gyaim-debug.apk pitecan.com:/www/www.pitecan.com/gyaim-${VERSION}.apk
 
 #
 # 辞書と検索のテスト
