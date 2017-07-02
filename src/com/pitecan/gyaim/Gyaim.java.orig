@@ -16,12 +16,11 @@ import android.view.inputmethod.CursorAnchorInfo;
 import android.os.Bundle;
 import android.os.Build; // for Build.VERSION.SDK_INT
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.widget.Button;
 import android.util.Log;
-
-// import android.widget.AbsoluteLayout; // これがあるとコンパイラに文句を言われる
 
 import android.content.Context;
 
@@ -33,16 +32,11 @@ import android.text.ClipboardManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-// 単語書き出し用
-////import java.io.FileOutputStream;
-////import java.io.IOException;
-////import java.io.FileNotFoundException;
-////import java.util.Date;
-////import java.text.SimpleDateFormat;
+import android.view.ViewGroup.MarginLayoutParams;
+import android.view.ViewGroup.LayoutParams;
 
-//import android.content.res.AssetManager;
-//import java.io.InputStream;
-//import java.io.IOException;
+import android.graphics.Matrix;
+import android.graphics.Rect;
 
 public class Gyaim extends InputMethodService 
 {
@@ -88,11 +82,8 @@ public class Gyaim extends InputMethodService
     @Override public void onStartInput(EditorInfo attribute, boolean restarting) {
         super.onStartInput(attribute, restarting);
 
-	/*
-	// カーソル位置を知らせる?
 	InputConnection ic = getCurrentInputConnection();
 	ic.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR);
-	*/
     }
 
     /**
@@ -101,37 +92,40 @@ public class Gyaim extends InputMethodService
      * is displayed, and every time it needs to be re-created such as due to
      * a configuration change.
      */
+    /*
     @Override public View onCreateInputView(){
-	//super.onCreateInputView(); // 必要??
-        //CandView xxx = (CandView) getLayoutInflater().inflate(R.layout.input, null);
-	//Log.v("Gyaim","onCreateInputView: xxx  = " + xxx);
 
 	InputConnection ic = getCurrentInputConnection();
 	ic.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR);
-	
-	// keyController = new KeyController(this,candView); // この場所?
 
 	return super.onCreateInputView(); // 必要??
     }
+    */
 
     @Override public View onCreateCandidatesView(){
 	super.onCreateCandidatesView(); // 必要??
 
-	/*
-        View view = (View) getLayoutInflater().inflate(R.layout.candidate, null);
-	Log.v("Gyaim","CANDVIEW ======= " + view);
-	candView = (CandView)view.findViewById(R.id.candview);
-	*/
-	
         candView = (CandView) getLayoutInflater().inflate(R.layout.candidate, null);
+
+	/*
+	ViewGroup viewGroup = (ViewGroup)getLayoutInflater().inflate(R.layout.main, null);
+	candView = (CandView)viewGroup.findViewById(R.id.candidates);
+	*/
+	  
 	Log.v("Gyaim","CANDVIEW = " + candView);
 
-	//candView.setY(100);
+	// candView.setY(100);
+	// candView.setTop(100);
 
-	setCandidatesViewShown(true);
+	setCandidatesViewShown(true); // これが無いと表示されない
 	
 	keyController = new KeyController(this,candView); // この場所?
 
+	/*
+	InputConnection ic = getCurrentInputConnection();
+	ic.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR);
+	*/
+	
 	return candView;
     }
 
@@ -206,6 +200,14 @@ public class Gyaim extends InputMethodService
     public void logWord(String word){
     }
 
+
+    void updateCursor (Rect newCursor){
+	Message.message("Gyaim","updateCursor: rect = " + newCursor);
+    }
+	
+    void updateCursorAnchorInfo (View view, CursorAnchorInfo cursorAnchorInfo){
+	Message.message("Gyaim","updateCursorAnchorInfo: view = " + view);
+    }
     //
     // キャレットの位置を取得する方法?
     //
@@ -218,6 +220,45 @@ public class Gyaim extends InputMethodService
 	cursorAnchorInfo.getInsertionMarkerHorizontal() (x)
 	    and cursorAnchorInfo.getInsertionMarkerTop() (y).
 	*/
-	Message.message("Gyaim","Cursor Pos = " + cursorAnchorInfo.getInsertionMarkerTop()); // NaNになることあり
+	Message.message("Gyaim","insertionMarkerTop = " + cursorAnchorInfo.getInsertionMarkerTop()); // NaNになることあり
+	Message.message("Gyaim","insertionMarkerHorizontal = " + cursorAnchorInfo.getInsertionMarkerHorizontal()); // NaNになることあり
+
+	Matrix matrix = cursorAnchorInfo.getMatrix();
+	float f[] = new float[9];
+	matrix.getValues(f);
+	Log.v("Gyaim","matrix = "+f[0]);
+	Log.v("Gyaim","matrix = "+f[1]);
+	Log.v("Gyaim","matrix = "+f[2]);
+	Log.v("Gyaim","matrix = "+f[3]);
+	Log.v("Gyaim","matrix = "+f[4]);
+	Log.v("Gyaim","matrix = "+f[5]);
+	Log.v("Gyaim","matrix = "+f[6]);
+	Log.v("Gyaim","matrix = "+f[7]);
+	Log.v("Gyaim","matrix = "+f[8]);
+
+	int loc[] = new int[2];
+	candView.getLocationInWindow(loc);
+	Log.v("Gyaim","location x= "+loc[0]);
+	Log.v("Gyaim","location y= "+loc[1]);
+
+	float floc[] = new float[2];
+	//floc[0] = (float)loc[0];
+	//floc[1] = (float)loc[1];
+	floc[0] = (float)0.0;
+	floc[1] = (float)cursorAnchorInfo.getInsertionMarkerTop();
+	matrix.mapPoints(floc);
+	Log.v("Gyaim","flocation x= "+floc[0]);
+	Log.v("Gyaim","flocation y= "+floc[1]);
+
+	LayoutParams lp = candView.getLayoutParams();
+	MarginLayoutParams mlp = (MarginLayoutParams)lp;
+	Log.v("Gyaim","topmargin = "+mlp.topMargin);
+	Log.v("Gyaim","bottommargin = "+mlp.bottomMargin);
+	Log.v("Gyaim","leftmargin = "+mlp.leftMargin);
+	Log.v("Gyaim","rightmargin = "+mlp.rightMargin);
+	mlp.setMargins(mlp.leftMargin, mlp.topMargin, mlp.rightMargin, 100);
+	//マージンを設定
+	candView.setLayoutParams(mlp);
+	
     }
 }

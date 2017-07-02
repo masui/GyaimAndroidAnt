@@ -73,6 +73,7 @@ class KeyController {
 	    searchTask.cancel(true); // キー入力があったらバックグラウンド検索を中止
 	}
 	if(keyCode == KeyEvent.KEYCODE_BACK){ // 画面上の左矢印キー
+	    Message.message("Gyaim","KEYCODE==BACK");
 	    return false;
 	}
 	if(keyCode == KeyEvent.KEYCODE_SYM){
@@ -219,6 +220,10 @@ class KeyController {
 	    }
 	    if(keyCode == KeyEvent.KEYCODE_ALT_LEFT){
 		alt = false;
+	    }
+	    if(keyCode == KeyEvent.KEYCODE_BACK){ // 画面上の左矢印キー
+		// これがないとうまくBackしない
+		return false;
 	    }
 	    return true;
 	}

@@ -15,6 +15,10 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 
+import android.view.ViewGroup.MarginLayoutParams;
+import android.view.ViewGroup.LayoutParams;
+
+
 class CandButton {
     Rect rect;
     String text;
@@ -69,7 +73,7 @@ public class CandView extends View {
 
 	canvas.drawColor(0xffddddff);
 	
-	setY(20); // よくわからない
+	setY(0); // よくわからない
 
 	CandButton button;
 	float textPos = 20;
@@ -92,12 +96,22 @@ public class CandView extends View {
 	int width = MeasureSpec.getSize(widthMeasureSpec);
 	int height = MeasureSpec.getSize(heightMeasureSpec);
 
-        setMeasuredDimension(1200,200);
+	Log.v("Gyaim","onMeasure: width = "+width+" height = "+height);
+	
+        setMeasuredDimension(1200,100);
+	//setTop(300);
+
+	/*
+	LayoutParams lp = getLayoutParams();
+	MarginLayoutParams mlp = (MarginLayoutParams)lp;
+	mlp.setMargins(mlp.leftMargin, 120, mlp.rightMargin, 120);
+	//マージンを設定
+	setLayoutParams(mlp);
+	*/
 
 	// self.layout()
 	
 	//Log.v("Gyaim","onMeasure = width = "+widthMeasureSpec+" height="+heightMeasureSpec);
-	Log.v("Gyaim","onMeasure = width = "+width+" height="+height);
 	//int specMode = MeasureSpec.getMode(widthMeasureSpec);
 	//int specSize = MeasureSpec.getSize(widthMeasureSpec);
 	//Log.v("Gyaim","modeandsize = "+specMode+", "+specSize);
@@ -121,8 +135,7 @@ public class CandView extends View {
 	// これにより landscape だとSlimeが画面一杯になってしまうのだが...
 	//
 	/*
-	Log.v("Gyaim","onMeasure = width = "+width);
-	Log.v("Gyaim","onMeasure = height = "+height);
+	Log.v("Gyaim","onMeasure: width = " +width + " height = " + height);
 	int imeWidth = width;
 	//	if(width > height) imeWidth = height;
 	expand = (float)imeWidth / (float)320.0;
