@@ -154,7 +154,6 @@ public class Gyaim extends InputMethodService
 	CharSequence seq = clipboardManager.getText();
 	oldClipboardText = (seq == null ? "" : seq.toString());
     }
-
     public String getNewClipboardText(){
 	CharSequence seq = clipboardManager.getText();
 	String cilpboardText = (seq == null ? "" : seq.toString());
@@ -167,24 +166,12 @@ public class Gyaim extends InputMethodService
     }
 
     //
-    // キーボードが表示されているときBackボタンが押されたら対応する
+    // KeyイベントをすべてKeyControllerに投げる
     //
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 	Log.v("Gyaim","onKeyDown - keyCode = "+keyCode);
 	return keyController.onKeyDown(keyCode, event);
-	/*
-	//if(Build.VERSION.SDK_INT >= 11 && keyCode == KeyEvent.KEYCODE_BACK && isInputViewShown()){
-	if(Build.VERSION.SDK_INT >= 11 && keyCode == KeyEvent.KEYCODE_BACK){ // 画面の←キー
-	    ////keyController.backKey();
-	    return false;
-	}
-	else {
-	    return keyController.onKeyDown(keyCode, event);
-	    //// return super.onKeyDown(keyCode,event);
-	}
-	// return true;
-	*/
     }
 
     @Override
@@ -213,16 +200,15 @@ public class Gyaim extends InputMethodService
 	ConnectivityManager connManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
 	NetworkInfo networkInfo = connManager.getActiveNetworkInfo();
 	Message.message("Gyaim","networkInfo = " + networkInfo);
-	if(networkInfo != null && networkInfo.isConnected()){
-	    return true;
-	}else{
-	    return false;
-	}
+	return networkInfo != null && networkInfo.isConnected();
     }
 
     public void logWord(String word){
     }
 
+    //
+    // キャレットの位置を取得する方法?
+    //
     // https://stackoverflow.com/questions/4930416/android-edittexts-cursor-coordinates-absolute-position
     @Override
     public void onUpdateCursorAnchorInfo(CursorAnchorInfo cursorAnchorInfo){

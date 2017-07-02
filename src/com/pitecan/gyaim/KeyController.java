@@ -41,9 +41,8 @@ class KeyController {
 
     private void searchAndDispCand(){
 	Message.message("Gyaim","searchAndDispCand()");
-	Message.message("Gyaim","searchAndDispCand(): candView = " + candView);
 	//
-	// バックグラウンドで検索実行
+	// バックグラウンドで検索実行 (AsyncTask機能)
 	//
 	searchTask = new SearchTask(candView);
 	searchTask.execute(inputPat());

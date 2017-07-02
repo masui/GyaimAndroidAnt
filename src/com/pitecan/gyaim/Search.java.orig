@@ -29,7 +29,7 @@ public class Search {
 
     public static Candidate[] candidates = new Candidate[Gyaim.MAXCANDS];  // 候補単語リスト
     public static int ncands = 0;
-    public static boolean useGoogle = true;
+    public static boolean useGoogle = true; // GoogleIMEで検索するかどうか
 
     public Search(Gyaim gyaim){
 	this.gyaim = gyaim;
@@ -66,7 +66,7 @@ public class Search {
 	ncands = 0;
 
 	//
-	// ひらがな/カタカナ
+	// 完全一致モードではひらがな/カタカナを候補に出す
 	//
 	if(LocalDict.exactMode){
 	    String hiragana = Romakana.roma2hiragana(pat);
@@ -86,7 +86,7 @@ public class Search {
 	}
 
 	//
-	// 学習辞書検索
+	// SQLの学習辞書検索
 	//
 	String[][] s = sqlDict.match(pat,LocalDict.exactMode);
 	for(int k=0;k<s.length;k++){
