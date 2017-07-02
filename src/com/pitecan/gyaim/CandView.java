@@ -59,21 +59,21 @@ public class CandView extends View {
 	buttonTextPaint = new Paint();
 	buttonTextPaint.setAntiAlias(true);
         buttonTextPaint.setTextSize(buttonTextSize); //  * expand);
-        buttonTextPaint.setColor(0xff005000); // 黒
+        buttonTextPaint.setColor(0xff101010); // 黒
 	buttonTextPaint.setTypeface(Typeface.DEFAULT_BOLD);
     }
 
     private int bgcolor;
     
     public void drawDefault(){
-	bgcolor = 0xffd0d0ff;
+	bgcolor = 0xb0d0d0d0;
 	invalidate();
     }
 
     @Override public void onDraw(Canvas canvas) {
 	// Message.message("Gyaim","onDraw----------------------------");
 
-	canvas.drawColor(0xb0ddddff);
+	canvas.drawColor(0xb0d0d0d0);
 	
 	setY(0); // よくわからない
 
