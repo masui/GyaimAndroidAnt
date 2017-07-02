@@ -32,8 +32,9 @@ import android.text.ClipboardManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
-import android.view.ViewGroup.MarginLayoutParams;
 import android.view.ViewGroup.LayoutParams;
+import android.view.ViewGroup.MarginLayoutParams;
+//import android.view.ViewGroup.AbsoluteLayoutParams;
 
 import android.graphics.Matrix;
 import android.graphics.Rect;
@@ -252,6 +253,7 @@ public class Gyaim extends InputMethodService
 
 	LayoutParams lp = candView.getLayoutParams();
 	MarginLayoutParams mlp = (MarginLayoutParams)lp;
+	//AbsoluteLayoutParams alp = (AbsoluteLayoutParams)lp; こんなのないか
 	Log.v("Gyaim","topmargin = "+mlp.topMargin);
 	Log.v("Gyaim","bottommargin = "+mlp.bottomMargin);
 	Log.v("Gyaim","leftmargin = "+mlp.leftMargin);
@@ -264,7 +266,7 @@ public class Gyaim extends InputMethodService
 	}
 	else {
 	    //margin = 1400 - (int)(f[2] + f[5] + markerTop);
-	    margin = 1460 - (int)(floc[1] + markerTop);
+	    margin = 1400 - (int)(floc[1]); //  + markerTop);
 	}
 	mlp.setMargins(mlp.leftMargin, mlp.topMargin, mlp.rightMargin, margin); // これで表示場所を変えられる
 	//マージンを設定
