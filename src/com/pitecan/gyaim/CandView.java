@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.view.ViewGroup.LayoutParams;
 
+import android.graphics.Typeface;
 
 class CandButton {
     Rect rect;
@@ -58,7 +59,8 @@ public class CandView extends View {
 	buttonTextPaint = new Paint();
 	buttonTextPaint.setAntiAlias(true);
         buttonTextPaint.setTextSize(buttonTextSize); //  * expand);
-        buttonTextPaint.setColor(0xff000000); // 黒
+        buttonTextPaint.setColor(0xff005000); // 黒
+	buttonTextPaint.setTypeface(Typeface.DEFAULT_BOLD);
     }
 
     private int bgcolor;
@@ -71,7 +73,7 @@ public class CandView extends View {
     @Override public void onDraw(Canvas canvas) {
 	// Message.message("Gyaim","onDraw----------------------------");
 
-	canvas.drawColor(0xffddddff);
+	canvas.drawColor(0xb0ddddff);
 	
 	setY(0); // よくわからない
 
