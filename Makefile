@@ -1,5 +1,5 @@
 VERSIONCODE=1
-VERSION=0.0.2
+VERSION=0.0.3
 
 build: local.properties setsrc
 	sed -e "s/VERSIONCODE/${VERSIONCODE}/" AndroidManifest.template | sed -e "s/VERSION/${VERSION}/" > AndroidManifest.xml
