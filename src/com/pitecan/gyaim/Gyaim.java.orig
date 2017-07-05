@@ -94,25 +94,35 @@ public class Gyaim extends InputMethodService
      * a configuration change.
      */
     /*
+      InputViewはキーボードを表示するViewなのだが、これが出ているとき
+      アプリの大きさはそのぶんだけ減る。なので入力枠が最下部にある
+      場合などは候補を出すためにこれが定義されていると良いのかもしれないのだが...
+     */
     @Override public View onCreateInputView(){
+	// return super.onCreateInputView(); // 必要??
 
-	InputConnection ic = getCurrentInputConnection();
-	ic.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR);
+        CandView dummyCandView = (CandView) getLayoutInflater().inflate(R.layout.candidate, null);
 
-	return super.onCreateInputView(); // 必要??
+	Log.v("Gyaim","CANDVIEW = " + candView);
+
+	// candView.setY(100);
+	// candView.setTop(100);
+
+	// setCandidatesViewShown(true); // これが無いと表示されない
+	
+	keyController = new KeyController(this,candView); // この場所?
+
+	return candView;
     }
-    */
 
+    /*
+      候補を表示するView。
+     */
     @Override public View onCreateCandidatesView(){
 	super.onCreateCandidatesView(); // 必要??
 
         candView = (CandView) getLayoutInflater().inflate(R.layout.candidate, null);
 
-	/*
-	ViewGroup viewGroup = (ViewGroup)getLayoutInflater().inflate(R.layout.main, null);
-	candView = (CandView)viewGroup.findViewById(R.id.candidates);
-	*/
-	  
 	Log.v("Gyaim","CANDVIEW = " + candView);
 
 	// candView.setY(100);
@@ -122,11 +132,6 @@ public class Gyaim extends InputMethodService
 	
 	keyController = new KeyController(this,candView); // この場所?
 
-	/*
-	InputConnection ic = getCurrentInputConnection();
-	ic.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR);
-	*/
-	
 	return candView;
     }
 
@@ -268,9 +273,10 @@ public class Gyaim extends InputMethodService
 	    //margin = 1400 - (int)(f[2] + f[5] + markerTop);
 	    margin = 1400 - (int)(floc[1]); //  + markerTop);
 	}
+	if(margin < 0) margin = 0;
+	
 	mlp.setMargins(mlp.leftMargin, mlp.topMargin, mlp.rightMargin, margin); // これで表示場所を変えられる
 	//マージンを設定
 	candView.setLayoutParams(mlp);
-	
     }
 }
