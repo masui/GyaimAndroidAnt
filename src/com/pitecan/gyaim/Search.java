@@ -111,7 +111,7 @@ public class Search {
 		if(gyaim.isConnected()){
 		    // 昔はGoogleSuggestを使っていたが制限があるようなのでGoogleIME APIを利用する
 		    // String[] suggestions = GoogleSuggest.suggest(word);
-		    String[] suggestions = GoogleIME.ime(Romakana.roma2hiragana(pat));
+		    String[] suggestions = GoogleIME.convert(Romakana.roma2hiragana(pat));
 		    Log.v("Gyaim","length="+suggestions.length);
 		    for(int i=0;suggestions[i] != null && suggestions[i] != "";i++){
 			Message.message("Gyaim","Use Google ... suggestions = "+suggestions[i]);

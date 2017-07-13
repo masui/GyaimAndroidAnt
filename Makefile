@@ -13,6 +13,7 @@ debug:
 	adb logcat | grep Gyaim
 clean:
 	/bin/rm -r -f bin gen
+	cd test; make clean
 push:
 	git push pitecan.com:/home/masui/git/GyaimAndroid.git
 	git push git@github.com:masui/GyaimAndroid.git
