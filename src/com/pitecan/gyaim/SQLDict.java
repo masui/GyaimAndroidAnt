@@ -32,8 +32,6 @@ import android.database.sqlite.SQLiteStatement;
 
 import android.content.Context;
 
-import android.util.Log;
-
 class DBHelper extends SQLiteOpenHelper {
     public DBHelper(Context context) {
         super(context, "learndict", null, 1);
@@ -85,7 +83,7 @@ public class SQLDict
             cursor.moveToPosition(max);
             word = cursor.getString(0);
             pat = cursor.getString(1);
-            //Log.v("SQLite","delete -> " + word);
+            //Message.message("SQLite","delete -> " + word);
             db.delete("history", "word = '"+word+"' AND pat = '"+pat+"'", null);
         }
         cursor.close();
@@ -95,7 +93,7 @@ public class SQLDict
         ArrayList<String> words = new ArrayList<String>();
         ArrayList<String> wordpats = new ArrayList<String>();
         Pattern pattern = (exactMode ? Pattern.compile("^"+pat) : Pattern.compile("^"+pat+".*"));
-        //Log.v("Gyaim","pattern="+pattern);
+        //Message.message("Gyaim","pattern="+pattern);
         
         Cursor cursor = db.query("history", new String[] { "word", "pat", "date" },
                                  "patind = " + LocalDict.patInd(pat), null, null, null, "date desc");
@@ -103,16 +101,16 @@ public class SQLDict
         while (isEof) {
             String word = cursor.getString(0);
             String wordpat = cursor.getString(1);
-            //Log.v("Gyaim",String.format("word:%s wordpat:%s\r\n", word, wordpat));
+            //Message.message("Gyaim",String.format("word:%s wordpat:%s\r\n", word, wordpat));
             if(pattern.matcher(wordpat).matches()){
-                //Log.v("Gyaim/SQLite - match",String.format("word:%s pat:%s\r\n", word, wordpat));
+                //Message.message("Gyaim/SQLite - match",String.format("word:%s pat:%s\r\n", word, wordpat));
                 words.add(word);
                 wordpats.add(wordpat);
             }
             isEof = cursor.moveToNext();
         }
         cursor.close();
-        //Log.v("Gyaim","length = "+words.size());
+        //Message.message("Gyaim","length = "+words.size());
         String[][] res = new String[words.size()][2];
         for(int i=0;i<words.size();i++){
             res[i][0] = words.get(i);

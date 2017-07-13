@@ -226,24 +226,21 @@ public class Romakana {
                 String r1 = substring(roma,ind+1,ind+2);
                 if((r0.equals("n") || r0.equals("N")) && ("bcdfghjklmnpqrstvwxz".indexOf(r1) >= 0)){
                     kana += (hiragana ? "ん" : "ン");
-                    ind += 1;
                 }
                 else {
                     if("bcdfghjklmpqrstvwxyz".indexOf(r0) >= 0 && r0.equals(r1)){
                         kana += (hiragana ? "っ" : "ッ");
-                        ind += 1;
                     }
                     else {
                         if((r0.equals("n") || r0.equals("N")) && ! r1.equals("")){
                             kana += (hiragana ? "ん" : "ン");
-                            ind += 1;
                         }
                         else {
-                            ind += 1;
                             okay = false;
                         }
                     }
                 }
+                ind += 1;
             }
         }
         return kana;
