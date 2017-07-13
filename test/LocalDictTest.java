@@ -38,7 +38,7 @@ public class LocalDictTest {
 
     @Test
     public void 単語辞書のサイズが充分大きい(){
-	assertTrue(localDict.dict().size() > 10000);
+	assertTrue(localDict.dict.size() > 10000);
     }
 
     @Test
@@ -46,7 +46,7 @@ public class LocalDictTest {
 	String 必須単語[] = { "漢字", "東京", "増井", "料理" };
 	for(String 単語: 必須単語){
 	    boolean 登録されてる = false;
-	    for(LocalDict.DictEntry entry: localDict.dict()) {
+	    for(LocalDict.DictEntry entry: localDict.dict) {
 		if(entry.word().equals(単語)) 登録されてる = true;
 	    }
 	    assertThat(登録されてる,is(true));

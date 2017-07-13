@@ -1,19 +1,9 @@
 VERSIONCODE=1
 VERSION=0.0.3
 
-build: local.properties setsrc
+build: local.properties
 	sed -e "s/VERSIONCODE/${VERSIONCODE}/" AndroidManifest.template | sed -e "s/VERSION/${VERSION}/" > AndroidManifest.xml
 	ant debug
-
-setsrc:
-	cp -f src/com/pitecan/gyaim/Message.java.orig src/com/pitecan/gyaim/Message.java
-	chmod 444 src/com/pitecan/gyaim/Message.java
-	cp -f src/com/pitecan/gyaim/Search.java.orig src/com/pitecan/gyaim/Search.java
-	chmod 444 src/com/pitecan/gyaim/Search.java
-	cp -f src/com/pitecan/gyaim/SearchTask.java.orig src/com/pitecan/gyaim/SearchTask.java
-	chmod 444 src/com/pitecan/gyaim/SearchTask.java
-	cp -f src/com/pitecan/gyaim/Gyaim.java.orig src/com/pitecan/gyaim/Gyaim.java
-	chmod 444 src/com/pitecan/gyaim/Gyaim.java
 
 install:
 	adb install -r bin/Gyaim-debug.apk

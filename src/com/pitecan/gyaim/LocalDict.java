@@ -52,10 +52,7 @@ public class LocalDict {
 	}
     }
 
-    static ArrayList<DictEntry> dict = new ArrayList<DictEntry>();
-    public ArrayList<DictEntry> dict(){
-	return dict;
-    }
+    public static ArrayList<DictEntry> dict = new ArrayList<DictEntry>();
 
     public LocalDict(InputStream is){
 	try {
@@ -215,23 +212,20 @@ public class LocalDict {
 	// Message.message("Gyaim","addCandidateWithLevel: word = " + w + "  pattern = " + p + "  level = " + level);
     }
 
-    private static Pattern[] patIndPattern = new Pattern[10];
-    private static boolean patIndInitialized = false;
+    private static Pattern[] patIndPattern = {
+	Pattern.compile("\\[?[aiueoAIUEO].*"),
+	Pattern.compile("\\[?[kg].*"),
+	Pattern.compile("\\[?[sz].*"),
+	Pattern.compile("\\[?[tdT].*"),
+	Pattern.compile("\\[?[n].*"),
+	Pattern.compile("\\[?[hbp].*"),
+	Pattern.compile("\\[?[m].*"),
+	Pattern.compile("\\[?[yY].*"),
+	Pattern.compile("\\[?[r].*")
+    };
     
     public static int patInd(String str){
-	if(! patIndInitialized){
-	    patIndPattern[0] = Pattern.compile("\\[?[aiueoAIUEO].*");
-	    patIndPattern[1] = Pattern.compile("\\[?[kg].*");
-	    patIndPattern[2] = Pattern.compile("\\[?[sz].*");
-	    patIndPattern[3] = Pattern.compile("\\[?[tdT].*");
-	    patIndPattern[4] = Pattern.compile("\\[?[n].*");
-	    patIndPattern[5] = Pattern.compile("\\[?[hbp].*");
-	    patIndPattern[6] = Pattern.compile("\\[?[m].*");
-	    patIndPattern[7] = Pattern.compile("\\[?[yY].*");
-	    patIndPattern[8] = Pattern.compile("\\[?[r].*");
-	    patIndInitialized = true;
-	}
-	for(int i=0;i<9;i++){
+	for(int i=0;i<patIndPattern.length;i++){
 	    Matcher matcher = patIndPattern[i].matcher(str);
 	    if(matcher.find()) return i;
 	}

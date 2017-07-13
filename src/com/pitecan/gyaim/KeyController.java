@@ -82,6 +82,7 @@ class KeyController {
 	    candView.setVisibility(japaneseInputMode ? View.VISIBLE : View.GONE);
 	    resetInput();
 	    fix();
+	    return true;
 	}
 	if(keyCode == KeyEvent.KEYCODE_SHIFT_RIGHT){
 	    // 右シフトキーで日本語モード/素通しモード切替
@@ -89,6 +90,7 @@ class KeyController {
 	    candView.setVisibility(japaneseInputMode ? View.VISIBLE : View.GONE);
 	    resetInput();
 	    fix();
+	    return true;
 	}
 	if(! japaneseInputMode){
 	    // 日本語モードでないときはfalseを返して素通しデフォルト動作(?)させる
@@ -100,9 +102,11 @@ class KeyController {
 	//
 	if(keyCode == KeyEvent.KEYCODE_SHIFT_LEFT){
 	    shift = true;
+	    return false;
 	}
 	if(keyCode == KeyEvent.KEYCODE_ALT_LEFT){
 	    alt = true;
+	    return false;
 	}
 	if(keyCode >= KeyEvent.KEYCODE_A && keyCode <= KeyEvent.KEYCODE_Z && !shift && !alt){
 	    int code = 0x61 + (keyCode - KeyEvent.KEYCODE_A);
@@ -216,9 +220,11 @@ class KeyController {
 	if(japaneseInputMode){
 	    if(keyCode == KeyEvent.KEYCODE_SHIFT_LEFT){
 		shift = false;
+		return false;
 	    }
 	    if(keyCode == KeyEvent.KEYCODE_ALT_LEFT){
 		alt = false;
+		return false;
 	    }
 	    if(keyCode == KeyEvent.KEYCODE_BACK){ // 画面上の左矢印キー
 		// これがないとうまくBackしない
