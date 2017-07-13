@@ -25,7 +25,7 @@ upload:
 #
 .PHONY: test
 test:
-	cd test; make; make test
+	cd test; make test
 
 #
 # ゼロからテスト/ビルド
