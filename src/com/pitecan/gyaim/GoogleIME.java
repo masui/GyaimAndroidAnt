@@ -6,33 +6,33 @@ import java.net.*;
 import java.io.*;
 
 import org.json.JSONArray;
-    
+
 public class GoogleIME {
     static public String[] convert(String q){
         String urlstr = "http://google.co.jp/transliterate?langpair=ja-Hira%7cja&text=" + q;
-
+        
         final int maxSuggestions = 20;
         String[] suggestions = new String[maxSuggestions+1];
         int nsuggest = 0;
         String jsonText = "[[\"\",[]]]";
-
+        
         try {
             URL url = new URL(urlstr);
-
+            
             // HTTP 接続オブジェクトの取得
-
+            
             URLConnection http = url.openConnection();
             //http.setRequestMethod("GET")
             // 接続
             http.connect();
-
+            
             // コンテンツの取得と表示
             BufferedInputStream bis = new BufferedInputStream(http.getInputStream());
             InputStreamReader inReader = new InputStreamReader(bis);
             BufferedReader bufReader = new BufferedReader(inReader);
-
+            
             StringBuilder result = new StringBuilder();
-
+            
             String line;
             while (true) {
                 line = bufReader.readLine();
@@ -40,9 +40,9 @@ public class GoogleIME {
                 result.append(line);
             }
             bufReader.close();
-
+            
             jsonText = result.toString();
-
+            
             //Message.message("Gyaim","jsonText = $jsonText")
             // http://www.google.co.jp/ime/cgiapi.html
             // "ここではきものをぬぐ" のようなパタンを与えたとき、
@@ -59,34 +59,34 @@ public class GoogleIME {
             //   ],
             // ]
             // これを読んで適当に候補を生成する
-	    try {
-		JSONArray ja1, ja2, ja3;
-		int len1, len3;
-		ja1 = new JSONArray(jsonText);
-		len1 = ja1.length();
-		int i = 0;
-		ja2 = ja1.getJSONArray(i);
-		ja3 = ja2.getJSONArray(1); // 第2要素 = 変換候補
-		len3 = ja3.length();
-		for(nsuggest=0; nsuggest<len3 && nsuggest < maxSuggestions; nsuggest++){
-		    suggestions[nsuggest] = ja3.getString(nsuggest);
-		}
-		suggestions[nsuggest] = "";
-		for(i=1; i<len1; i++){
-		    ja2 = ja1.getJSONArray(i);
-		    // String s = ja2.getString(0); // 第1要素 = 元の文字列
-		    ja3 = ja2.getJSONArray(1); // 第2要素 = 変換候補
-		    for(int j=0; j<nsuggest; j++){
-			suggestions[j] += ja3.getString(0); // ふたつめ以降は最初の候補を連結する
-		    }
-		}
+            try {
+                JSONArray ja1, ja2, ja3;
+                int len1, len3;
+                ja1 = new JSONArray(jsonText);
+                len1 = ja1.length();
+                int i = 0;
+                ja2 = ja1.getJSONArray(i);
+                ja3 = ja2.getJSONArray(1); // 第2要素 = 変換候補
+                len3 = ja3.length();
+                for(nsuggest=0; nsuggest<len3 && nsuggest < maxSuggestions; nsuggest++){
+                    suggestions[nsuggest] = ja3.getString(nsuggest);
+                }
+                suggestions[nsuggest] = "";
+                for(i=1; i<len1; i++){
+                    ja2 = ja1.getJSONArray(i);
+                    // String s = ja2.getString(0); // 第1要素 = 元の文字列
+                    ja3 = ja2.getJSONArray(1); // 第2要素 = 変換候補
+                    for(int j=0; j<nsuggest; j++){
+                        suggestions[j] += ja3.getString(0); // ふたつめ以降は最初の候補を連結する
+                    }
+                }
             } catch (JSONException e) {
                 Message.message("Gyaim", "JSON Exception " + e);
             }
         } catch (Exception e) {
             Message.message("Gyaim", "GoogleIME error " + e);
         }
-
+        
         return suggestions; // いつも同じものを返すのはよくない...
     }
 }

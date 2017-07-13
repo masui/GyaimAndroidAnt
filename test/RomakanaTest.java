@@ -1,3 +1,7 @@
+//
+// ローマ字かな変換のユニットテスト
+//
+
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -8,13 +12,13 @@ import com.pitecan.gyaim.Romakana;
 
 public class RomakanaTest {
 
-    public RomakanaTest(){
-    }
-
     String testdata[][] = {
 	{ "masui", "ますい", "マスイ" },
 	{ "dhisukushisutemu", "でぃすくしすてむ", "ディスクシステム" },
-	{ "vaiorin", "う゛ぁいおりん", "ヴァイオリン"},
+        { "dexisukusisutemu", "でぃすくしすてむ", "ディスクシステム" },
+        { "shachou", "しゃちょう", "シャチョウ" },
+        { "syatyou", "しゃちょう", "シャチョウ" },
+        { "vaiorin", "う゛ぁいおりん", "ヴァイオリン" },
 	{ "hannnya", "はんにゃ", "ハンニャ"}
     };
 
