@@ -1,9 +1,11 @@
-# Gyaim
+# Gyaim for Android
 
 * Android用の日本語IMEです。
+* 今のところBlackBerry KEYOne専用ですがどこでも使えるようにしたいと思っています
 * MacのGyaimとだいたい同じ感じで使えます。
 * antでMakeします。オールドですみません。
 * 右シフトキーで日本語モードon/offします。
+* 「物理キーボードがある場合でもソフトキーボードを表示する」という設定にして下さい。
 
 ### TODO
 
@@ -15,7 +17,7 @@
 ### 問題
 
 * テストについて
-    * LocalDict.javaをテストするためにAndroidに依存しないソースにしている
+    * LocalDict.javaをテストするためにAndroidに依存しないソースにしているつもり
     * そのためにMessageというクラスを作ってLog()のかわりにしている
     * テスト時と実機運用で異なるMessage.javaを使う
 

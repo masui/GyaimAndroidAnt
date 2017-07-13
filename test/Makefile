@@ -2,7 +2,7 @@
 # 辞書検索、ローマ字かな変換のテスト
 #
 
-all: compile test dir
+test: compile testall dir
 romakana: compile_romakana test_romakana
 
 #
@@ -36,7 +36,7 @@ compile_googleime:
 		Message.java \
 		GoogleIMETest.java
 
-test: test_localdict test_romakana test_googleime
+testall: test_localdict test_romakana test_googleime
 test_localdict:
 	java -classpath "${LIB}:.:../src" org.junit.runner.JUnitCore LocalDictTest
 test_romakana:
