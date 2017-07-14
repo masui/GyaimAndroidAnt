@@ -78,7 +78,9 @@ public class Gyaim extends InputMethodService
         super.onStartInput(attribute, restarting);
         
         InputConnection ic = getCurrentInputConnection();
-        ic.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR);
+        if(ic != null){
+            ic.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR);
+        }
     }
     
     /**

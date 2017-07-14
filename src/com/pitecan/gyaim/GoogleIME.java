@@ -7,13 +7,17 @@ import java.io.*;
 
 import org.json.JSONArray;
 
+import java.util.ArrayList;
+
 public class GoogleIME {
-    static public String[] convert(String q){
+    //static public String[] convert(String q){
+    static public ArrayList<String>  convert(String q){
         String urlstr = "http://google.co.jp/transliterate?langpair=ja-Hira%7cja&text=" + q;
         
         final int maxSuggestions = 20;
-        String[] suggestions = new String[maxSuggestions+1];
-        int nsuggest = 0;
+        // String[] suggestions = new String[maxSuggestions+1];
+        ArrayList<String> suggestions = new ArrayList<String>();
+        ////int nsuggest = 0;
         String jsonText = "[[\"\",[]]]";
         
         try {
@@ -68,17 +72,23 @@ public class GoogleIME {
                 ja2 = ja1.getJSONArray(i);
                 ja3 = ja2.getJSONArray(1); // 第2要素 = 変換候補
                 len3 = ja3.length();
-                for(nsuggest=0; nsuggest<len3 && nsuggest < maxSuggestions; nsuggest++){
-                    suggestions[nsuggest] = ja3.getString(nsuggest);
+                ////for(nsuggest=0; nsuggest<len3 && nsuggest < maxSuggestions; nsuggest++){
+                //    suggestions[nsuggest] = ja3.getString(nsuggest);
+                //}
+                for(i=0; i<len3 && i< maxSuggestions; i++){
+                    suggestions.add(ja3.getString(i));
                 }
-                suggestions[nsuggest] = "";
+                ////suggestions[nsuggest] = "";
                 for(i=1; i<len1; i++){
                     ja2 = ja1.getJSONArray(i);
                     // String s = ja2.getString(0); // 第1要素 = 元の文字列
                     ja3 = ja2.getJSONArray(1); // 第2要素 = 変換候補
-                    for(int j=0; j<nsuggest; j++){
-                        suggestions[j] += ja3.getString(0); // ふたつめ以降は最初の候補を連結する
+                    for(int j=0; j<suggestions.size(); j++){
+                        suggestions.set(j,suggestions.get(j) + ja3.getString(0)); // ふたつめ以降は最初の候補を連結する
                     }
+                    //for(String s: suggestions){
+                    //    s += ja3.getString(0); // ふたつめ以降は最初の候補を連結する
+                    //}
                 }
             } catch (JSONException e) {
                 Message.message("Gyaim", "JSON Exception " + e);
@@ -87,6 +97,7 @@ public class GoogleIME {
             Message.message("Gyaim", "GoogleIME error " + e);
         }
         
-        return suggestions; // いつも同じものを返すのはよくない...
+        //return suggestions.toArray(new String[suggestions.size()]); // いつも同じものを返すのはよくない...
+        return suggestions;
     }
 }

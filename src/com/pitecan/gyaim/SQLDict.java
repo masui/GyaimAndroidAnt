@@ -57,14 +57,14 @@ class DBHelper extends SQLiteOpenHelper {
 
 public class SQLDict
 {
-    SQLiteDatabase db;
+    static SQLiteDatabase db;
     
     public SQLDict(Context context){
         DBHelper helper = new DBHelper(context);
         db = helper.getWritableDatabase();
     }
     
-    public void add(String word, String pat){ // エントリ追加
+    public static void add(String word, String pat){ // エントリ追加
         // 最初に全部消す
         db.delete("history", "word = '"+word+"' AND pat = '"+pat+"'", null);
         int patind = LocalDict.patInd(pat);
@@ -73,7 +73,7 @@ public class SQLDict
         db.execSQL("insert into history(word,pat,patind,date) values ('"+word+"', '"+pat+"', "+patind+", datetime('now', 'localtime'));");
     }
     
-    public void limit(int max){ // max個までにDBを制限する
+    public static void limit(int max){ // max個までにDBを制限する
         Cursor cursor;
         String word, pat;
         cursor = db.query("history", new String[] { "word", "pat", "patind", "date" },
@@ -89,7 +89,7 @@ public class SQLDict
         cursor.close();
     }
     
-    public String[][] match(String pat, boolean exactMode){ // 新しいものから検索
+    public static String[][] search(String pat, boolean exactMode){ // 新しいものから検索
         ArrayList<String> words = new ArrayList<String>();
         ArrayList<String> wordpats = new ArrayList<String>();
         Pattern pattern = (exactMode ? Pattern.compile("^"+pat) : Pattern.compile("^"+pat+".*"));

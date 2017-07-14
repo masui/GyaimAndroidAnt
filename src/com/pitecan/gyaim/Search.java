@@ -5,6 +5,7 @@
 package com.pitecan.gyaim;
 
 import java.util.Arrays;
+import java.util.ArrayList;
 import android.util.Log;
 
 import android.content.res.AssetManager;
@@ -23,8 +24,6 @@ class Candidate {
 }
 
 public class Search {
-    private static LocalDict localDict;
-    public static SQLDict sqlDict;
     private static Gyaim gyaim;
     
     public static Candidate[] candidates = new Candidate[Gyaim.MAXCANDS];  // 候補単語リスト
@@ -36,18 +35,17 @@ public class Search {
         //
         // 内蔵固定辞書
         //
-        localDict = null;
         try {
             AssetManager as = gyaim.getResources().getAssets();
             InputStream is = as.open("dict.txt");
-            localDict = new LocalDict(is);
+            new LocalDict(is);
         } catch (IOException e) {  
             //e.printStackTrace();  
         }
         //
         // 学習辞書(SQL)
         //
-        sqlDict = new SQLDict(gyaim);
+        new SQLDict(gyaim);
         
         for(int i=0;i<Gyaim.MAXCANDS;i++){
             candidates[i] = new Candidate("","",0);
@@ -88,9 +86,9 @@ public class Search {
         //
         // SQLの学習辞書検索
         //
-        String[][] s = sqlDict.match(pat,LocalDict.exactMode);
-        for(int k=0;k<s.length;k++){
-            addCandidateWithLevel(s[k][0],s[k][1],-50+k);
+        String[][] sqldata = SQLDict.search(pat,LocalDict.exactMode);
+        for(int k=0;k<sqldata.length;k++){
+            addCandidateWithLevel(sqldata[k][0],sqldata[k][1],-50+k);
         }
         
         //
@@ -104,29 +102,31 @@ public class Search {
         // Google検索
         //
         Message.message("Gyaim","UseGoogle = " + useGoogle);
-        if(!searchTask.isCancelled()){
-            // Google Suggest または Google日本語入力を利用
-            if(useGoogle){
-                Message.message("Gyaim","isConnected() = " + gyaim.isConnected());
-                if(gyaim.isConnected()){
-                    // 昔はGoogleSuggestを使っていたが制限があるようなのでGoogleIME APIを利用する
-                    // String[] suggestions = GoogleSuggest.suggest(word);
-                    String[] suggestions = GoogleIME.convert(Romakana.roma2hiragana(pat));
-                    Log.v("Gyaim","length="+suggestions.length);
-                    for(int i=0;suggestions[i] != null && suggestions[i] != "";i++){
-                        Message.message("Gyaim","Use Google ... suggestions = "+suggestions[i]);
-                        addCandidateWithLevel(suggestions[i],KeyController.inputPat(),50);
-                    }
-                }
+        if(useGoogle && !searchTask.isCancelled() && gyaim.isConnected()){
+            // Google日本語入力APIを利用
+            Message.message("Gyaim","isConnected() = " + gyaim.isConnected());
+            /*
+              String[] suggestions = GoogleIME.convert(Romakana.roma2hiragana(pat));
+              Log.v("Gyaim","length="+suggestions.length);
+              for(int i=0;suggestions[i] != null && suggestions[i] != "";i++){
+              Message.message("Gyaim","Use Google ... suggestions = "+suggestions[i]);
+              addCandidateWithLevel(suggestions[i],KeyController.inputPat(),50);
+              }
+            */
+            ArrayList<String> words = GoogleIME.convert(Romakana.roma2hiragana(pat));
+            Log.v("Gyaim","length="+words.size());
+            for(String word: words){
+                Message.message("Gyaim","Use Google ... word = "+word);
+                addCandidateWithLevel(word,KeyController.inputPat(),50);
             }
-            
-            // 優先度に従って候補を並べなおし
-            //for(int j=ncands;j<Gyaim.MAXCANDS;j++){
-            //  candidates[j].weight = 100;
-            //}
-            // ソートをやめてみたが全く違いがわからない... 要るのだろうか?? (2012/12/11 08:58:42)
-            //Arrays.sort(candidates, new CandidateComparator());
         }
+            
+        // 優先度に従って候補を並べなおし
+        //for(int j=ncands;j<Gyaim.MAXCANDS;j++){
+        //  candidates[j].weight = 100;
+        //}
+        // ソートをやめてみたが全く違いがわからない... 要るのだろうか?? (2012/12/11 08:58:42)
+        //Arrays.sort(candidates, new CandidateComparator());
         
         return candidates;
     }
