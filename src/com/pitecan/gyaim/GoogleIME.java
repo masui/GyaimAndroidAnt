@@ -10,8 +10,8 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 
 public class GoogleIME {
-    //static public String[] convert(String q){
-    static public ArrayList<String>  convert(String q){
+    //static public ArrayList<String>  convert(String q){
+    static public String[] convert(String q){
         String urlstr = "http://google.co.jp/transliterate?langpair=ja-Hira%7cja&text=" + q;
         
         final int maxSuggestions = 20;
@@ -97,7 +97,7 @@ public class GoogleIME {
             Message.message("Gyaim", "GoogleIME error " + e);
         }
         
-        //return suggestions.toArray(new String[suggestions.size()]); // いつも同じものを返すのはよくない...
-        return suggestions;
+        return suggestions.toArray(new String[suggestions.size()]);
+        //return suggestions;
     }
 }

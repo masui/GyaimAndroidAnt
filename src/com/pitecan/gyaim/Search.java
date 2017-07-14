@@ -5,7 +5,7 @@
 package com.pitecan.gyaim;
 
 import java.util.Arrays;
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import android.util.Log;
 
 import android.content.res.AssetManager;
@@ -99,22 +99,14 @@ public class Search {
         LocalDict.search(pat,searchTask);
         
         //
-        // Google検索
+        // GoogleIME
         //
         Message.message("Gyaim","UseGoogle = " + useGoogle);
         if(useGoogle && !searchTask.isCancelled() && gyaim.isConnected()){
             // Google日本語入力APIを利用
             Message.message("Gyaim","isConnected() = " + gyaim.isConnected());
-            /*
-              String[] suggestions = GoogleIME.convert(Romakana.roma2hiragana(pat));
-              Log.v("Gyaim","length="+suggestions.length);
-              for(int i=0;suggestions[i] != null && suggestions[i] != "";i++){
-              Message.message("Gyaim","Use Google ... suggestions = "+suggestions[i]);
-              addCandidateWithLevel(suggestions[i],KeyController.inputPat(),50);
-              }
-            */
-            ArrayList<String> words = GoogleIME.convert(Romakana.roma2hiragana(pat));
-            Log.v("Gyaim","length="+words.size());
+            String[] words = GoogleIME.convert(Romakana.roma2hiragana(pat));
+            Log.v("Gyaim","length="+words.length);
             for(String word: words){
                 Message.message("Gyaim","Use Google ... word = "+word);
                 addCandidateWithLevel(word,KeyController.inputPat(),50);

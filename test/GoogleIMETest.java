@@ -19,15 +19,12 @@ public class GoogleIMETest {
     @Test
     public void Google変換チェック() {
         for (String[] 変換例: 変換例リスト) {
-            /*
             boolean found = false;
-            for(String s: GoogleIME.convert(変換例[0])){
-                // if(s.equals("")) break;
-                if(s.equals(変換例[1])) found = true;
+            for(String word: GoogleIME.convert(変換例[0])){
+                if(word.equals(変換例[1])) found = true;
             }
             assertTrue(found);
-            */
-            assertTrue(GoogleIME.convert(変換例[0]).contains(変換例[1]));
+            // assertTrue(GoogleIME.convert(変換例[0]).contains(変換例[1]));
         }
     }
 }
