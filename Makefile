@@ -1,5 +1,5 @@
 VERSIONCODE=1
-VERSION=0.0.3
+VERSION=0.0.4
 
 build: local.properties
 	sed -e "s/VERSIONCODE/${VERSIONCODE}/" AndroidManifest.template | sed -e "s/VERSION/${VERSION}/" > AndroidManifest.xml
@@ -14,6 +14,8 @@ debug:
 clean:
 	/bin/rm -r -f bin gen
 	cd test; make clean
+wc:
+	wc src/com/pitecan/gyaim/*.java
 push:
 	git push pitecan.com:/home/masui/git/GyaimAndroid.git
 	git push git@github.com:masui/GyaimAndroid.git
